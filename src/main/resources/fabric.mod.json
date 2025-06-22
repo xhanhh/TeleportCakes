@@ -1,0 +1,50 @@
+{
+	"schemaVersion": 1,
+	"id": "teleportcakes",
+	"version": "${version}",
+	"name": "Teleport Cakes",
+	"description": "Adds cakes for teleportation between various dimensions.",
+	"authors": [
+		"xhanhh"
+	],
+	"contact": {
+		"homepage": "https://modrinth.com/project/teleportcakes",
+		"sources": "https://github.com/xhanhh/TeleportCakes",
+		"issues": "https://github.com/xhanhh/TeleportCakes/issues"
+	},
+	"license": "GNU GPLv3",
+	"icon": "assets/teleportcakes/logo.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"top.ilov.mcmods.tc.TeleportCakesMod"
+		],
+		"modmenu": [
+			"top.ilov.mcmods.tc.integration.modmenu.CakeMenu"
+		]
+	},
+	"mixins": [
+		"teleportcakes.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.15.10",
+		"minecraft": ">=1.20",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"modmenu": "*",
+		"cloth-config2": "*"
+	},
+	"breaks": {
+		"cakedelight": "<=1.20.1-v3.1.0"
+	},
+	"custom": {
+		"modmenu": {
+			"update_checker": true,
+			"links": {
+				"modmenu.curseforge": "https://www.curseforge.com/minecraft/mc-mods/teleportcakes"
+			}
+		}
+	}
+}

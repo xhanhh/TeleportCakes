@@ -12,7 +12,7 @@
 		"sources": "https://github.com/xhanhh/TeleportCakes",
 		"issues": "https://github.com/xhanhh/TeleportCakes/issues"
 	},
-	"license": "GNU GPLv3",
+	"license": "Assets: CC-BY-NC-SA 4.0, Code: GNU GPLv3",
 	"icon": "assets/teleportcakes/logo.png",
 	"environment": "*",
 	"entrypoints": {

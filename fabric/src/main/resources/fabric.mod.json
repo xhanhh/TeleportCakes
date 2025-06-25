@@ -1,0 +1,51 @@
+{
+    "schemaVersion": 1,
+    "id": "${mod_id}",
+    "version": "${version}",
+    "name": "${mod_name}",
+    "description": "${description}",
+    "authors": [
+        "${mod_author}"
+    ],
+    "contact": {
+        "homepage": "https://modrinth.com/project/teleportcakes",
+        "sources": "https://github.com/xhanhh/TeleportCakes",
+        "issues": "https://github.com/xhanhh/TeleportCakes/issues"
+    },
+    "license": "${license}",
+    "icon": "logo.png",
+    "environment": "*",
+    "entrypoints": {
+        "main": [
+            "top.ilov.mcmods.tc.TCFabricMod"
+        ],
+        "modmenu": [
+            "top.ilov.mcmods.tc.integration.modmenu.CakeMenu"
+        ]
+    },
+    "mixins": [
+        "${mod_id}.mixins.json"
+    ],
+    "depends": {
+        "fabricloader": ">=${fabric_loader_version}",
+        "fabric-api": "*",
+        "minecraft": "${minecraft_version}",
+        "java": ">=${java_version}"
+    },
+    "suggests": {
+        "modmenu": "*",
+        "cloth-config2": "*"
+    },
+    "breaks": {
+        "cakedelight": "<=1.21.1-v4.0.0"
+    },
+    "custom": {
+        "modmenu": {
+            "update_checker": true,
+            "links": {
+                "modmenu.curseforge": "https://www.curseforge.com/minecraft/mc-mods/teleportcakes"
+            }
+        }
+    }
+}
+  

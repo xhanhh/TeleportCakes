@@ -1,5 +1,4 @@
 # Teleport Cakes Mod
-<a href="https://www.modrinth.com/mod/fabric-api" target="_blank"><img src="https://i.postimg.cc/W4bxQKm4/Ol1Tcf8.png" alt="" width="149" height="50"></a>
 ## 📖 About:
 This mod separates the teleport cakes from [CakeDelight](https://github.com/xhanhh/CakeDelight-fabric) to create a mod, and cakes can teleportation between various dimensions.
 

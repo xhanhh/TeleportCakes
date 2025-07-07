@@ -10,23 +10,10 @@
 
   "key":
   {
-    "A":
-    {
-      "tag": "c:milks"
-    },
-    "B":
-    {
-      "item": "minecraft:ender_eye"
-
-    },
-    "C":
-    {
-      "item": "minecraft:soul_sand"
-    },
-    "D":
-    {
-      "item": "minecraft:wheat"
-    }
+    "A": "#c:milks",
+    "B": "minecraft:ender_eye",
+    "C": "minecraft:soul_sand",
+    "D": "minecraft:wheat"
   },
 
   "result":

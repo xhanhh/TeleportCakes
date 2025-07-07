@@ -1,29 +1,22 @@
 package top.ilov.mcmods.tc.blocks.cakes;
 
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.portal.TeleportTransition;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
-import top.ilov.mcmods.tc.TeleportCakesMod;
 import top.ilov.mcmods.tc.blocks.CakeTeleportBase;
 import top.ilov.mcmods.tc.utils.NetherTeleportHelper;
-
-import java.util.List;
 
 public class NetherCakeBlock extends CakeTeleportBase {
 
@@ -35,7 +28,7 @@ public class NetherCakeBlock extends CakeTeleportBase {
 
     @Override
     @NotNull
-    public ItemInteractionResult useItemOn(@NotNull ItemStack stack, @NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos,
+    public InteractionResult useItemOn(@NotNull ItemStack stack, @NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos,
                                                     Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hitResult) {
         ItemStack itemStack = player.getItemInHand(hand);
 
@@ -44,10 +37,10 @@ public class NetherCakeBlock extends CakeTeleportBase {
 
             level.setBlock(pos, state.setValue(BITES, state.getValue(BITES) - 1), 3);
             itemStack.shrink(1);
-            return ItemInteractionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
 
-        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        return InteractionResult.TRY_WITH_EMPTY_HAND;
     }
 
     @Override
@@ -74,8 +67,12 @@ public class NetherCakeBlock extends CakeTeleportBase {
                 float yaw = player.getYRot();
                 float pitch = player.getXRot();
 
-                if (player instanceof ServerPlayer serverPlayer) {
-                    serverPlayer.teleportTo(nether, targetPos.x, targetPos.y, targetPos.z, yaw, pitch);
+                Player teleportedPlayer = (Player) player.teleport(
+                        new TeleportTransition(nether, targetPos, player.getKnownMovement(), yaw, pitch,
+                                TeleportTransition.PLAY_PORTAL_SOUND.then(TeleportTransition.PLACE_PORTAL_TICKET)));
+
+                if (teleportedPlayer != null) {
+                    teleportedPlayer.setPos(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
                 }
 
                 NetherTeleportHelper.checkPlatformAndPlaceCake(nether, spawnPos, player.getDirection());
@@ -98,20 +95,6 @@ public class NetherCakeBlock extends CakeTeleportBase {
         }
 
         return eat(level, pos, state, player);
-    }
-
-    @Override
-    public void appendHoverText(@NotNull ItemStack stack, Item.@NotNull TooltipContext context,
-                                @NotNull List<Component> tooltipComponents, @NotNull TooltipFlag tooltipFlag) {
-
-        if (!TeleportCakesMod.CONFIG.isEnable_tooltips_for_displaying_item()) return;
-
-        if (Screen.hasShiftDown()) {
-            tooltipComponents.add(Component.translatable("tooltip.teleportcakes.nether_cake"));
-        } else {
-            tooltipComponents.add(Component.translatable("tooltip.teleportcakes.shift"));
-        }
-
     }
 
 }

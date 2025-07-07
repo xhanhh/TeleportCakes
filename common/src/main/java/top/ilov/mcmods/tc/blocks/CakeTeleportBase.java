@@ -5,7 +5,6 @@ import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.CakeBlock;
@@ -13,12 +12,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
-import top.ilov.mcmods.tc.TeleportCakesMod;
-import top.ilov.mcmods.tc.platform.Services;
 
-import java.util.Random;
-
-public class CakeTeleportBase extends CakeBlock {
+public abstract class CakeTeleportBase extends CakeBlock {
 
     public CakeTeleportBase(Properties properties) {
         super(properties);
@@ -49,13 +44,6 @@ public class CakeTeleportBase extends CakeBlock {
         } else {
             player.awardStat(Stats.EAT_CAKE_SLICE);
             player.getFoodData().eat(2, 0.1F);
-
-            Random random = new Random();
-            if (TeleportCakesMod.CONFIG.isEnable_the_sound_of_eating_cakes() | Services.PLATFORM.isModLoaded("cakechomps")) {
-                ItemStack stack = state.getBlock().getCloneItemStack(level, pos, state);
-                player.playSound(player.getEatingSound(stack), 0.5f + 0.4f * (float) random.nextInt(2),
-                        (random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F);
-            }
 
             int i = state.getValue(BITES);
             level.gameEvent(player, GameEvent.EAT, pos);

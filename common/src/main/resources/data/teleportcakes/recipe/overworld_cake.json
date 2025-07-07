@@ -10,22 +10,10 @@
 
   "key":
   {
-    "A":
-    {
-      "tag": "c:milks"
-    },
-    "B":
-    {
-      "tag": "c:sands"
-    },
-    "C":
-    {
-      "tag": "c:dirts"
-    },
-    "D":
-    {
-      "item": "minecraft:wheat"
-    }
+    "A": "#c:milks",
+    "B": "#c:sands",
+    "C": "#c:dirts",
+    "D": "minecraft:wheat"
   },
 
   "result":

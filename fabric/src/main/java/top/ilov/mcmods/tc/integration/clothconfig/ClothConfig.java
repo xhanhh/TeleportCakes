@@ -23,7 +23,7 @@ public class ClothConfig {
         general.addEntry(entryBuilder
                 .startBooleanToggle(Component.translatable("config.teleportcakes.enable_eating_cakes_sound"),
                         TeleportCakesMod.CONFIG.isEnable_the_sound_of_eating_cakes())
-                .setDefaultValue(true)
+                .setDefaultValue(false)
                 .setTooltip(Component.translatable("config.teleportcakes.enable_eating_cakes_sound.tooltip"))
                 .setSaveConsumer(newValue -> TeleportCakesMod.CONFIG.setEnable_the_sound_of_eating_cakes(newValue))
                 .build()

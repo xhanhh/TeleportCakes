@@ -13,7 +13,7 @@ import java.nio.file.Files;
 @Data
 public final class CakeConfig {
 
-    private boolean enable_the_sound_of_eating_cakes = true;
+    private boolean enable_the_sound_of_eating_cakes = false;
     private boolean enable_tooltips_for_displaying_item = true;
 
     static File config = new File(Services.PLATFORM.getConfigDir().toFile(),

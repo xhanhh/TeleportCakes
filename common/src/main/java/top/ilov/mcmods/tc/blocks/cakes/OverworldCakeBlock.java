@@ -15,6 +15,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 import top.ilov.mcmods.tc.blocks.CakeTeleportBase;
@@ -59,21 +60,14 @@ public class OverworldCakeBlock extends CakeTeleportBase {
                     return InteractionResult.FAIL;
                 }
 
-                BlockPos spawnPos = serverLevel.getSharedSpawnPos();
-                double x = spawnPos.getX() + 0.5;
-                double y = spawnPos.getY();
-                double z = spawnPos.getZ() + 0.5;
-                float yaw = player.getYRot();
-                float pitch = player.getXRot();
-
-                eat(level, pos, state, player);
-
                 if (player instanceof ServerPlayer serverPlayer) {
-                    serverPlayer.teleportTo(serverLevel, x, y, z, yaw, pitch);
-                    serverPlayer.setPos(spawnPos.getX() + 1, spawnPos.getY(), spawnPos.getZ());
+                    DimensionTransition dimensionTransition = serverPlayer.findRespawnPositionAndUseSpawnBlock(
+                            false, DimensionTransition.DO_NOTHING
+                    );
+                    serverPlayer.changeDimension(dimensionTransition);
                 }
 
-                return InteractionResult.SUCCESS;
+                return eat(level, pos, state, player);
             } else {
                 player.displayClientMessage(Component.translatable("msg.teleportcakes.cannot_eat_overworld_cake"), true);
                 return InteractionResult.PASS;

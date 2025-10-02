@@ -78,8 +78,6 @@ public class EndCakeBlock extends CakeTeleportBase {
 
                 float yaw = Direction.WEST.toYRot();
 
-                eat(level, pos, state, player);
-
                 if (player instanceof ServerPlayer serverPlayer) {
                     serverPlayer.teleportTo(targetLevel, vec3.x, vec3.y, vec3.z, yaw, player.getXRot());
                     serverPlayer.setPos(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
@@ -94,7 +92,7 @@ public class EndCakeBlock extends CakeTeleportBase {
                     targetLevel.setBlock(cakePos, BlocksRegistry.overworld_cake.get().defaultBlockState(), 3);
                 }
 
-                return InteractionResult.SUCCESS;
+                return eat(level, pos, state, player);
             } else {
                 player.displayClientMessage(Component.translatable("msg.teleportcakes.cannot_eat_end_cake"), true);
                 return InteractionResult.PASS;

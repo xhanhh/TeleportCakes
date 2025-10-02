@@ -54,8 +54,6 @@ public class EndCakeBlock extends CakeTeleportBase {
                     return InteractionResult.FAIL;
                 }
 
-                eat(level, pos, state, player);
-
                 Entity teleportedEntity = player.changeDimension(targetLevel);
                 if (teleportedEntity instanceof Player teleportedPlayer) {
                     teleportedPlayer.teleportTo(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
@@ -70,7 +68,7 @@ public class EndCakeBlock extends CakeTeleportBase {
                     targetLevel.setBlock(cakePos, BlocksRegistry.overworld_cake.defaultBlockState(), 3);
                 }
 
-                return InteractionResult.SUCCESS;
+                return eat(level, pos, state, player);
             } else {
                 player.displayClientMessage(Component.translatable("msg.teleportcakes.cannot_eat_end_cake"), true);
             }

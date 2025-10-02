@@ -36,9 +36,6 @@
         "modmenu": "*",
         "cloth-config2": "*"
     },
-    "breaks": {
-        "cakedelight": "<=1.21.1-v4.0.0"
-    },
     "custom": {
         "modmenu": {
             "update_checker": true,

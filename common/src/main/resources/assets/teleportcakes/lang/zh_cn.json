@@ -20,6 +20,6 @@
   "config.teleportcakes.enable_tooltips_for_displaying_item": "启用显示物品的Tooltips",
   "config.teleportcakes.enable_tooltips_for_displaying_item.tooltip": "鼠标移到一些物品上，有‘§7按住§r §eShift§r’字样的提示。",
   
-  "modmenu.nameTranslation.teleportcakes": "跃迁蛋糕（Teleport Cakes）",
+  "modmenu.nameTranslation.teleportcakes": "Teleport Cakes",
   "modmenu.descriptionTranslation.teleportcakes": "添加了用于各维度间传送往返的蛋糕。"
 }

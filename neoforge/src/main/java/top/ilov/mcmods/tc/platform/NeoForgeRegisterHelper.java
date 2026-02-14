@@ -1,6 +1,6 @@
 package top.ilov.mcmods.tc.platform;
 
-import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
@@ -10,6 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.block.Block;
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.jetbrains.annotations.NotNull;
 import top.ilov.mcmods.tc.TeleportCakesMod;
@@ -27,15 +28,7 @@ public class NeoForgeRegisterHelper implements IRegisterHelper {
     @Override
     public <T extends Block> Supplier<T> registerCakeBlock(String name, Supplier<T> blockSupplier) {
 
-        Supplier<T> registeredBlock = BLOCKS.register(name, id -> {
-            T block = blockSupplier.get();
-            if (block instanceof Block cakeBlock) {
-                cakeBlock.defaultBlockState().getBlock().properties().setId(
-                        ResourceKey.create(Registries.BLOCK, id)
-                );
-            }
-            return block;
-        });
+        Supplier<T> registeredBlock = BLOCKS.register(name, id -> blockSupplier.get());
 
         ITEMS.register(name, id -> new BlockItem(
                 registeredBlock.get(),
@@ -50,7 +43,7 @@ public class NeoForgeRegisterHelper implements IRegisterHelper {
                 if (!TeleportCakesMod.CONFIG.isEnable_tooltips_for_displaying_item()) return;
                 if (name.equals("overworld_cake")) return;
 
-                if (Screen.hasShiftDown()) {
+                if (Minecraft.getInstance().hasShiftDown() && Dist.CLIENT.isClient()) {
                     components.accept(Component.translatable("tooltip.teleportcakes." + name));
                 } else {
                     components.accept(Component.translatable("tooltip.teleportcakes.shift"));

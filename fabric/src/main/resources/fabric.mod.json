@@ -19,6 +19,9 @@
         "main": [
             "top.ilov.mcmods.tc.TCFabricMod"
         ],
+        "client": [
+            "top.ilov.mcmods.tc.TCFabricClientMod"
+        ],
         "modmenu": [
             "top.ilov.mcmods.tc.integration.modmenu.CakeMenu"
         ]

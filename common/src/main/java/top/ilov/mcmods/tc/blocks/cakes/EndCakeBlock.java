@@ -36,7 +36,7 @@ public class EndCakeBlock extends CakeTeleportBase {
                                            Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hitResult) {
         ItemStack itemStack = player.getItemInHand(hand);
 
-        if (itemStack.getItem() == Items.ENDER_EYE && state.getValue(BITES) > 0 && !level.isClientSide) {
+        if (itemStack.getItem() == Items.ENDER_EYE && state.getValue(BITES) > 0 && !level.isClientSide()) {
             level.setBlock(pos, state.setValue(BITES, state.getValue(BITES) - 1), 3);
             itemStack.shrink(1);
             return InteractionResult.SUCCESS;
@@ -51,7 +51,7 @@ public class EndCakeBlock extends CakeTeleportBase {
     public InteractionResult useWithoutItem(@NotNull BlockState state, Level level, @NotNull BlockPos pos,
                                             @NotNull Player player, @NotNull BlockHitResult hitResult) {
 
-        if (!level.isClientSide && !player.isSpectator()) {
+        if (!level.isClientSide() && !player.isSpectator()) {
 
             if (level.dimension() != Level.END) {
 
@@ -90,14 +90,14 @@ public class EndCakeBlock extends CakeTeleportBase {
                     targetLevel.setBlock(cakePos, BlocksRegistry.overworld_cake.get().defaultBlockState(), 3);
                 }
 
-                return InteractionResult.SUCCESS;
+                return eat(level, pos, state, player);
             } else {
                 player.displayClientMessage(Component.translatable("msg.teleportcakes.cannot_eat_end_cake"), true);
                 return InteractionResult.PASS;
             }
         }
 
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             if (eat(level, pos, state, player).consumesAction()) {
                 return InteractionResult.SUCCESS;
             }

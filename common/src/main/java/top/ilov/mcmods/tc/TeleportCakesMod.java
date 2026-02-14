@@ -1,6 +1,6 @@
 package top.ilov.mcmods.tc;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import top.ilov.mcmods.tc.blocks.BlocksRegistry;
@@ -13,8 +13,8 @@ public class TeleportCakesMod {
 
 	public static CakeConfig CONFIG = new CakeConfig();
 
-	public static ResourceLocation rl(String id) {
-		return ResourceLocation.fromNamespaceAndPath(MOD_ID, id);
+	public static Identifier rl(String id) {
+		return Identifier.fromNamespaceAndPath(MOD_ID, id);
 	}
 
 	public static void init() {

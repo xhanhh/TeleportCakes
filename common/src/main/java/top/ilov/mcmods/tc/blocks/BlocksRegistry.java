@@ -1,8 +1,8 @@
 package top.ilov.mcmods.tc.blocks;
 
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CakeBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -32,7 +32,7 @@ public class BlocksRegistry {
                     .setId(ResourceKey.create(Registries.BLOCK, id)))
     );
 
-    private static <T extends CakeBlock> Supplier<T> registerCakeBlock(String name, Function<ResourceLocation, T> blockFactory) {
+    private static <T extends CakeBlock> Supplier<T> registerCakeBlock(String name, Function<Identifier, T> blockFactory) {
         return Services.REGISTER.registerCakeBlock(name, () -> blockFactory.apply(TeleportCakesMod.rl(name)));
     }
 

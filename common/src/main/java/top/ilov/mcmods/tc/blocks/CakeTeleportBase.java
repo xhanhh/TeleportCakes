@@ -23,7 +23,7 @@ public abstract class CakeTeleportBase extends CakeBlock {
     @NotNull
     public InteractionResult useWithoutItem(@NotNull BlockState state, Level level, @NotNull BlockPos pos,
                                             @NotNull Player player, @NotNull BlockHitResult hitResult) {
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             if (eat(level, pos, state, player).consumesAction()) {
                 return InteractionResult.SUCCESS;
             }

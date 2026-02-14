@@ -33,7 +33,7 @@ public class NetherCakeBlock extends CakeTeleportBase {
         ItemStack itemStack = player.getItemInHand(hand);
 
         if (itemStack.getItem() == net.minecraft.world.item.Items.OBSIDIAN
-                && state.getValue(BITES) > 0 && !level.isClientSide) {
+                && state.getValue(BITES) > 0 && !level.isClientSide()) {
 
             level.setBlock(pos, state.setValue(BITES, state.getValue(BITES) - 1), 3);
             itemStack.shrink(1);
@@ -48,7 +48,7 @@ public class NetherCakeBlock extends CakeTeleportBase {
     public InteractionResult useWithoutItem(@NotNull BlockState state, Level level, @NotNull BlockPos pos,
                                             @NotNull Player player, @NotNull BlockHitResult hitResult) {
 
-        if (!level.isClientSide && level instanceof ServerLevel serverLevel
+        if (!level.isClientSide() && level instanceof ServerLevel serverLevel
                 && !player.isSpectator() && !player.isPassenger()) {
 
             if (!serverLevel.dimension().equals(Level.NETHER)) {
@@ -84,7 +84,7 @@ public class NetherCakeBlock extends CakeTeleportBase {
             }
         }
 
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             if (eat(level, pos, state, player).consumesAction()) {
                 return InteractionResult.SUCCESS;
             }

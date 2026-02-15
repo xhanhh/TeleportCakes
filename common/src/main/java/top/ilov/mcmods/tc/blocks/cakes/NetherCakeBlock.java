@@ -1,7 +1,6 @@
 package top.ilov.mcmods.tc.blocks.cakes;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -51,50 +50,38 @@ public class NetherCakeBlock extends CakeTeleportBase {
         if (!level.isClientSide() && level instanceof ServerLevel serverLevel
                 && !player.isSpectator() && !player.isPassenger()) {
 
-            if (!serverLevel.dimension().equals(Level.NETHER)) {
-                ServerLevel nether = serverLevel.getServer().getLevel(Level.NETHER);
-                if (nether == null) {
-                    return InteractionResult.FAIL;
-                }
-
-                BlockPos spawnPos = NetherTeleportHelper.findSafeNetherSpawn(nether, player);
-                if (spawnPos == null) {
-                    spawnPos = new BlockPos(0, 70, 0);
-                    NetherTeleportHelper.checkPlatformAndPlaceCake(nether, spawnPos, player.getDirection());
-                }
-
-                Vec3 targetPos = spawnPos.getCenter();
-                float yaw = player.getYRot();
-                float pitch = player.getXRot();
-
-                Player teleportedPlayer = (Player) player.teleport(
-                        new TeleportTransition(nether, targetPos, player.getKnownMovement(), yaw, pitch,
-                                TeleportTransition.PLAY_PORTAL_SOUND.then(TeleportTransition.PLACE_PORTAL_TICKET)));
-
-                if (teleportedPlayer != null) {
-                    teleportedPlayer.setPos(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
-                }
-
-                NetherTeleportHelper.checkPlatformAndPlaceCake(nether, spawnPos, player.getDirection());
-
-                return eat(level, pos, state, player);
-            } else {
-                player.displayClientMessage(Component.translatable("msg.teleportcakes.cannot_eat_nether_cake"), true);
+            if (!player.canEat(false)) {
                 return InteractionResult.PASS;
             }
-        }
 
-        if (level.isClientSide()) {
-            if (eat(level, pos, state, player).consumesAction()) {
-                return InteractionResult.SUCCESS;
+            ServerLevel nether = serverLevel.getServer().getLevel(Level.NETHER);
+            if (nether == null) {
+                return InteractionResult.FAIL;
             }
 
-            if (player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) {
-                return InteractionResult.CONSUME;
+            BlockPos spawnPos = NetherTeleportHelper.findSafeNetherSpawn(nether, player);
+            if (spawnPos == null) {
+                spawnPos = new BlockPos(0, 70, 0);
             }
+
+            NetherTeleportHelper.checkPlatformAndPlaceCake(nether, spawnPos, player.getDirection());
+
+            Vec3 targetPos = spawnPos.getCenter();
+            float yaw = player.getYRot();
+            float pitch = player.getXRot();
+
+            Player teleportedPlayer = (Player) player.teleport(
+                    new TeleportTransition(nether, targetPos, player.getKnownMovement(), yaw, pitch,
+                            TeleportTransition.PLAY_PORTAL_SOUND.then(TeleportTransition.PLACE_PORTAL_TICKET)));
+
+            if (teleportedPlayer == null) {
+                return InteractionResult.FAIL;
+            }
+
+            return eat(level, pos, state, player);
         }
 
-        return eat(level, pos, state, player);
+        return super.useWithoutItem(state, level, pos, player, hitResult);
     }
 
 }

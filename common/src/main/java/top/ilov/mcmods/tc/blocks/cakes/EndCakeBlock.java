@@ -2,8 +2,6 @@ package top.ilov.mcmods.tc.blocks.cakes;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -51,63 +49,52 @@ public class EndCakeBlock extends CakeTeleportBase {
     public InteractionResult useWithoutItem(@NotNull BlockState state, Level level, @NotNull BlockPos pos,
                                             @NotNull Player player, @NotNull BlockHitResult hitResult) {
 
-        if (!level.isClientSide() && !player.isSpectator()) {
+        if (!level.isClientSide() && level instanceof ServerLevel serverLevel
+                && !player.isSpectator() && !player.isPassenger()) {
 
-            if (level.dimension() != Level.END) {
-
-                ResourceKey<Level> registryKey = level.dimension() == Level.END ? Level.OVERWORLD : Level.END;
-                ServerLevel targetLevel = ((ServerLevel) level).getServer().getLevel(registryKey);
-
-                BlockPos spawnPos = ServerLevel.END_SPAWN_POINT;
-
-                if (targetLevel == null) {
-                    return InteractionResult.FAIL;
-                }
-
-                Vec3 vec3 = spawnPos.getCenter();
-                BlockPos platformPos = BlockPos.containing(vec3).below();
-
-                EndPlatformFeature.createEndPlatform(targetLevel, platformPos, true);
-
-                float yaw = Direction.WEST.toYRot();
-
-                eat(level, pos, state, player);
-
-                Player teleportedPlayer = (Player) player.teleport(
-                        new TeleportTransition(targetLevel, vec3, player.getKnownMovement(), yaw, player.getXRot(),
-                                TeleportTransition.PLAY_PORTAL_SOUND.then(TeleportTransition.PLACE_PORTAL_TICKET)));
-
-                if (teleportedPlayer != null) {
-                    teleportedPlayer.setPos(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
-                }
-
-                BlockPos cakePos = spawnPos.relative(player.getDirection());
-                while (targetLevel.isEmptyBlock(cakePos.below())) {
-                    cakePos = cakePos.below();
-                }
-
-                if (targetLevel.isEmptyBlock(cakePos)) {
-                    targetLevel.setBlock(cakePos, BlocksRegistry.overworld_cake.get().defaultBlockState(), 3);
-                }
-
-                return eat(level, pos, state, player);
-            } else {
-                player.displayClientMessage(Component.translatable("msg.teleportcakes.cannot_eat_end_cake"), true);
+            if (!player.canEat(false)) {
                 return InteractionResult.PASS;
             }
-        }
 
-        if (level.isClientSide()) {
-            if (eat(level, pos, state, player).consumesAction()) {
-                return InteractionResult.SUCCESS;
+            ServerLevel targetLevel = serverLevel.getServer().getLevel(Level.END);
+            if (targetLevel == null) {
+                return InteractionResult.FAIL;
             }
 
-            if (player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) {
-                return InteractionResult.CONSUME;
+            BlockPos spawnPos = ServerLevel.END_SPAWN_POINT;
+            Vec3 targetPos = spawnPos.getCenter();
+
+            EndPlatformFeature.createEndPlatform(targetLevel, spawnPos.below(), true);
+
+            float yaw = Direction.WEST.toYRot();
+
+            Player teleportedPlayer = (Player) player.teleport(
+                    new TeleportTransition(targetLevel, targetPos, player.getKnownMovement(), yaw, player.getXRot(),
+                            TeleportTransition.PLAY_PORTAL_SOUND.then(TeleportTransition.PLACE_PORTAL_TICKET)));
+
+            if (teleportedPlayer == null) {
+                return InteractionResult.FAIL;
             }
+
+            placeOverworldCakeNearEndSpawn(targetLevel, spawnPos, player);
+
+            return eat(level, pos, state, player);
         }
 
-        return eat(level, pos, state, player);
+        return super.useWithoutItem(state, level, pos, player, hitResult);
+    }
+
+    private static void placeOverworldCakeNearEndSpawn(ServerLevel level, BlockPos spawnPos, Player player) {
+
+        BlockPos cakePos = spawnPos.relative(player.getDirection());
+        while (level.isEmptyBlock(cakePos.below())) {
+            cakePos = cakePos.below();
+        }
+
+        if (level.isEmptyBlock(cakePos)) {
+            level.setBlock(cakePos, BlocksRegistry.overworld_cake.get().defaultBlockState(), 3);
+        }
+
     }
 
 }

@@ -2,7 +2,6 @@ package top.ilov.mcmods.tc.blocks.cakes;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -49,41 +48,29 @@ public class OverworldCakeBlock extends CakeTeleportBase {
     public InteractionResult useWithoutItem(@NotNull BlockState state, Level level, @NotNull BlockPos pos,
                                             @NotNull Player player, @NotNull BlockHitResult hitResult) {
 
-        if (!level.isClientSide() && !player.isSpectator()) {
-            if (level.dimension() != Level.OVERWORLD) {
+        if (player.isSpectator()) return InteractionResult.PASS;
 
-                ResourceKey<Level> registryKey = Level.OVERWORLD;
-                ServerLevel serverLevel = ((ServerLevel) level).getServer().getLevel(registryKey);
-
-                if (serverLevel == null) {
-                    return InteractionResult.FAIL;
-                }
-
-                if (player instanceof ServerPlayer serverPlayer) {
-                    TeleportTransition teleportTransition = serverPlayer.findRespawnPositionAndUseSpawnBlock(
-                            false, TeleportTransition.DO_NOTHING
-                    );
-                    serverPlayer.teleport(teleportTransition);
-                }
-
-                return eat(level, pos, state, player);
-            } else {
+        if (level.dimension() == Level.OVERWORLD) {
+            if (!level.isClientSide()) {
                 player.displayClientMessage(Component.translatable("msg.teleportcakes.cannot_eat_overworld_cake"), true);
+            }
+            return InteractionResult.PASS;
+        }
+
+        if (!level.isClientSide() && level instanceof ServerLevel serverLevel && player instanceof ServerPlayer serverPlayer) {
+            if (!player.canEat(false)) {
                 return InteractionResult.PASS;
             }
+
+            TeleportTransition teleportTransition = serverPlayer.findRespawnPositionAndUseSpawnBlock(
+                    false, TeleportTransition.DO_NOTHING
+            );
+            serverPlayer.teleport(teleportTransition);
+            return eat(level, pos, state, player);
+
         }
 
-        if (level.isClientSide()) {
-            if (eat(level, pos, state, player).consumesAction()) {
-                return InteractionResult.SUCCESS;
-            }
-
-            if (player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) {
-                return InteractionResult.CONSUME;
-            }
-        }
-
-        return eat(level, pos, state, player);
+        return super.useWithoutItem(state, level, pos, player, hitResult);
     }
 
 

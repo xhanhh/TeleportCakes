@@ -2,6 +2,7 @@ package top.ilov.mcmods.tc.blocks.cakes;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -53,6 +54,11 @@ public class EndCakeBlock extends CakeTeleportBase {
                 && !player.isSpectator() && !player.isPassenger()) {
 
             if (!player.canEat(false)) {
+                return InteractionResult.PASS;
+            }
+
+            if (serverLevel.dimension().equals(Level.END)) {
+                player.displayClientMessage(Component.translatable("msg.teleportcakes.cannot_eat_end_cake"), true);
                 return InteractionResult.PASS;
             }
 

@@ -1,7 +1,7 @@
 package top.ilov.mcmods.tc;
 
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
+import net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTab;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -25,7 +25,7 @@ public class TCFabricMod implements ModInitializer {
             TeleportCakesMod.rl("group"));
 
     public static void registerItemGroup() {
-        Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, ITEM_GROUP, FabricItemGroup.builder()
+        Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, ITEM_GROUP, FabricCreativeModeTab.builder()
                 .title(Component.translatable("teleportcakes.name"))
                 .icon(() -> new ItemStack(BlocksRegistry.end_cake.get()))
                 .displayItems((context, entries) -> {

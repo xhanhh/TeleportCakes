@@ -86,7 +86,7 @@ public class NetherTeleportHelper {
     @Nullable
     public static BlockPos getSavedNetherSpawn(ServerPlayer player) {
 
-        for (String tag : player.getTags()) {
+        for (String tag : player.entityTags()) {
             if (!tag.startsWith(PLAYER_TAG_SPAWN_POS_PREFIX)) continue;
 
             String payload = tag.substring(PLAYER_TAG_SPAWN_POS_PREFIX.length());
@@ -108,7 +108,7 @@ public class NetherTeleportHelper {
 
     private static void setSavedNetherSpawn(ServerPlayer player, BlockPos pos) {
         String toRemove = null;
-        for (String tag : player.getTags()) {
+        for (String tag : player.entityTags()) {
             if (tag.startsWith(PLAYER_TAG_SPAWN_POS_PREFIX)) {
                 toRemove = tag;
                 break;

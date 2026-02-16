@@ -57,10 +57,7 @@ public class OverworldCakeBlock extends CakeTeleportBase {
             return InteractionResult.PASS;
         }
 
-        if (!level.isClientSide() && level instanceof ServerLevel serverLevel && player instanceof ServerPlayer serverPlayer) {
-            if (!player.canEat(false)) {
-                return InteractionResult.PASS;
-            }
+        if (!level.isClientSide() && level instanceof ServerLevel && player instanceof ServerPlayer serverPlayer) {
 
             TeleportTransition teleportTransition = serverPlayer.findRespawnPositionAndUseSpawnBlock(
                     false, TeleportTransition.DO_NOTHING

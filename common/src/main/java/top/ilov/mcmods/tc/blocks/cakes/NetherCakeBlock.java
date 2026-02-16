@@ -52,10 +52,6 @@ public class NetherCakeBlock extends CakeTeleportBase {
         if (!level.isClientSide() && level instanceof ServerLevel serverLevel
                 && !player.isSpectator() && !player.isPassenger()) {
 
-            if (!player.canEat(false)) {
-                return InteractionResult.PASS;
-            }
-
             if (serverLevel.dimension().equals(Level.NETHER)) {
                 player.displayClientMessage(Component.translatable("msg.teleportcakes.cannot_eat_nether_cake"), true);
                 return InteractionResult.PASS;

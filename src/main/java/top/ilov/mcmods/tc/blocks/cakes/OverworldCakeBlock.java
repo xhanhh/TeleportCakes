@@ -34,60 +34,66 @@ public class OverworldCakeBlock extends CakeTeleportBase {
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         ItemStack itemStack = player.getItemInHand(hand);
 
-        if (!level.isClientSide && !player.isSpectator() && itemStack.isEmpty()) {
-            if (level.dimension() != Level.OVERWORLD) {
+        if (player.isSpectator()) return InteractionResult.PASS;
 
-                ResourceKey<Level> registryKey = Level.OVERWORLD;
-                ServerLevel serverLevel = ((ServerLevel) level).getServer().getLevel(registryKey);
+        if (itemStack.isEmpty()) {
 
-                if (serverLevel == null) {
-                    return InteractionResult.FAIL;
+            if (level.dimension() == Level.OVERWORLD) {
+                if (!level.isClientSide()) {
+                    player.displayClientMessage(Component.translatable("msg.teleportcakes.cannot_eat_overworld_cake"), true);
                 }
-
-                float yaw = player.getYRot();
-                float pitch = player.getXRot();
-
-                if (player instanceof ServerPlayer serverPlayer) {
-
-                    BlockPos respawnPos = serverPlayer.getRespawnPosition();
-                    float respawnAngle = serverPlayer.getRespawnAngle();
-
-                    Optional<Vec3> safePosOpt = Optional.empty();
-                    if (respawnPos != null) {
-                        safePosOpt = Player.findRespawnPositionAndUseSpawnBlock(
-                                serverLevel, respawnPos, respawnAngle, false, true);
-                    }
-
-                    Vec3 targetPos;
-                    if (safePosOpt.isPresent()) {
-                        targetPos = safePosOpt.get();
-                    } else {
-                        BlockPos worldSpawn = serverLevel.getSharedSpawnPos();
-                        targetPos = Vec3.atCenterOf(worldSpawn);
-                    }
-
-                    serverPlayer.teleportTo(serverLevel, targetPos.x, targetPos.y, targetPos.z, yaw, pitch);
-                }
-
-                return eat(level, pos, state, player);
-            } else {
-                player.displayClientMessage(Component.translatable("msg.teleportcakes.cannot_eat_overworld_cake"), true);
+                return InteractionResult.PASS;
             }
-        }
 
-        if (itemStack.getItem() == Items.MILK_BUCKET && state.getValue(BITES) > 0 && !level.isClientSide) {
-            level.setBlock(pos, state.setValue(BITES, state.getValue(BITES) - 1), 3);
-            itemStack.shrink(1);
-            player.setItemInHand(hand, new ItemStack(Items.BUCKET));
-        }
-
-        if (level.isClientSide && itemStack.isEmpty()) {
-            if (eat(level, pos, state, player).consumesAction()) {
+            if (level.isClientSide) {
                 return InteractionResult.SUCCESS;
             }
-            if (itemStack.isEmpty()) {
-                return InteractionResult.CONSUME;
+
+            if (!(level instanceof ServerLevel currentLevel) || !(player instanceof ServerPlayer serverPlayer)) {
+                return InteractionResult.FAIL;
             }
+
+            ResourceKey<Level> registryKey = Level.OVERWORLD;
+            ServerLevel serverLevel = currentLevel.getServer().getLevel(registryKey);
+
+            if (serverLevel == null) {
+                return InteractionResult.FAIL;
+            }
+
+            float yaw = player.getYRot();
+            float pitch = player.getXRot();
+
+            BlockPos respawnPos = serverPlayer.getRespawnPosition();
+            float respawnAngle = serverPlayer.getRespawnAngle();
+
+            Optional<Vec3> safePosOpt = Optional.empty();
+            if (respawnPos != null) {
+                safePosOpt = Player.findRespawnPositionAndUseSpawnBlock(
+                        serverLevel, respawnPos, respawnAngle, false, true);
+            }
+
+            Vec3 targetPos;
+            if (safePosOpt.isPresent()) {
+                targetPos = safePosOpt.get();
+            } else {
+                BlockPos worldSpawn = serverLevel.getSharedSpawnPos();
+                targetPos = Vec3.atCenterOf(worldSpawn);
+            }
+
+            serverPlayer.teleportTo(serverLevel, targetPos.x, targetPos.y, targetPos.z, yaw, pitch);
+
+            return super.use(state, level, pos, player, hand, hit);
+
+        }
+
+        if (itemStack.is(Items.MILK_BUCKET) && state.getValue(BITES) > 0) {
+            if (!level.isClientSide) {
+                level.setBlock(pos, state.setValue(BITES, state.getValue(BITES) - 1), 3);
+                if (!player.getAbilities().instabuild) {
+                    player.setItemInHand(hand, new ItemStack(Items.BUCKET));
+                }
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
         }
 
         return InteractionResult.PASS;

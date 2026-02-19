@@ -11,6 +11,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -43,50 +44,52 @@ public class NetherCakeBlock extends CakeTeleportBase {
         if (!level.isClientSide && level instanceof ServerLevel serverLevel
                 && !player.isSpectator() && itemStack.isEmpty() && !player.isPassenger()) {
 
-            if (!serverLevel.dimension().equals(Level.NETHER)) {
-                ServerLevel nether = serverLevel.getServer().getLevel(Level.NETHER);
-                if (nether == null) {
-                    return InteractionResult.FAIL;
-                }
+            if (serverLevel.dimension().equals(Level.NETHER)) {
+                player.displayClientMessage(Component.translatable("msg.teleportcakes.cannot_eat_nether_cake"), true);
+                return InteractionResult.PASS;
+            }
 
-                BlockPos spawnPos = NetherTeleportHelper.findSafeNetherSpawn(nether, player);
-                if (spawnPos == null) {
-                    spawnPos = new BlockPos(0, 70, 0);
-                    NetherTeleportHelper.checkPlatformAndPlaceCake(nether, spawnPos, player.getDirection());
-                }
+            ServerLevel nether = serverLevel.getServer().getLevel(Level.NETHER);
+            if (nether == null) {
+                return InteractionResult.FAIL;
+            }
 
-                Vec3 targetPos = spawnPos.getCenter();
-                float yaw = player.getYRot();
-                float pitch = player.getXRot();
+            if (player instanceof ServerPlayer serverPlayer
+                    && !NetherTeleportHelper.hasWorldNetherSpawn(nether)
+                    && !NetherTeleportHelper.hasSavedNetherSpawn(serverPlayer)) {
+                serverPlayer.displayClientMessage(Component.translatable("msg.teleportcakes.creating_nether_spwan_point"), true);
+            }
 
-                if (player instanceof ServerPlayer serverPlayer) {
-                    serverPlayer.teleportTo(nether, targetPos.x, targetPos.y, targetPos.z, yaw, pitch);
-                }
-
-                NetherTeleportHelper.checkPlatformAndPlaceCake(nether, spawnPos, player.getDirection());
-
-                return eat(level, pos, state, player);
+            @NotNull BlockPos spawnPos;
+            if (player instanceof ServerPlayer serverPlayer) {
+                spawnPos = NetherTeleportHelper.getOrCreateNetherSpawn(nether, serverPlayer, player.getDirection());
             } else {
-                player.sendSystemMessage(Component.translatable("msg.teleportcakes.cannot_eat_nether_cake"));
+                BlockPos found = NetherTeleportHelper.findSafeNetherSpawn(nether, player);
+                spawnPos = found != null ? found : new BlockPos(0, 70, 0);
+                NetherTeleportHelper.checkPlatformAndPlaceCake(nether, spawnPos, player.getDirection());
             }
+
+            Vec3 targetPos = spawnPos.getCenter();
+            float yaw = player.getYRot();
+            float pitch = player.getXRot();
+
+            if (player instanceof ServerPlayer serverPlayer) {
+                serverPlayer.teleportTo(nether, targetPos.x, targetPos.y, targetPos.z, yaw, pitch);
+            } else {
+                return InteractionResult.FAIL;
+            }
+
+            return super.use(state, level, pos, player, hand, hit);
         }
 
-        if (itemStack.getItem() == net.minecraft.world.item.Items.OBSIDIAN
-                && state.getValue(BITES) > 0 && !level.isClientSide) {
-
-            level.setBlock(pos, state.setValue(BITES, state.getValue(BITES) - 1), 3);
-            itemStack.shrink(1);
-            return InteractionResult.SUCCESS;
-        }
-
-        if (level.isClientSide && itemStack.isEmpty()) {
-            if (eat(level, pos, state, player).consumesAction()) {
-                return InteractionResult.SUCCESS;
+        if (itemStack.is(Items.OBSIDIAN) && state.getValue(BITES) > 0) {
+            if (!level.isClientSide) {
+                level.setBlock(pos, state.setValue(BITES, state.getValue(BITES) - 1), 3);
+                if (!player.getAbilities().instabuild) {
+                    itemStack.shrink(1);
+                }
             }
-
-            if (itemStack.isEmpty()) {
-                return InteractionResult.CONSUME;
-            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
         }
 
         return InteractionResult.PASS;

@@ -5,7 +5,6 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -41,49 +40,46 @@ public class EndCakeBlock extends CakeTeleportBase {
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         ItemStack itemStack = player.getItemInHand(hand);
 
-        if (!level.isClientSide && !player.isSpectator() && itemStack.isEmpty()) {
+        if (!level.isClientSide && level instanceof ServerLevel serverLevel
+                && !player.isSpectator() && itemStack.isEmpty()) {
 
-            if (level.dimension() != Level.END) {
-
-                ResourceKey<Level> registryKey = level.dimension() == Level.END ? Level.OVERWORLD : Level.END;
-                ServerLevel targetLevel = ((ServerLevel) level).getServer().getLevel(registryKey);
-
-                BlockPos spawnPos = ServerLevel.END_SPAWN_POINT;
-
-                if (targetLevel == null) {
-                    return InteractionResult.FAIL;
-                }
-
-                Entity teleportedEntity = player.changeDimension(targetLevel);
-                if (teleportedEntity instanceof Player teleportedPlayer) {
-                    teleportedPlayer.teleportTo(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
-                }
-
-                BlockPos cakePos = spawnPos.relative(player.getDirection());
-                while (targetLevel.isEmptyBlock(cakePos.below())) {
-                    cakePos = cakePos.below();
-                }
-
-                if (targetLevel.isEmptyBlock(cakePos)) {
-                    targetLevel.setBlock(cakePos, BlocksRegistry.overworld_cake.defaultBlockState(), 3);
-                }
-
-                return eat(level, pos, state, player);
-            } else {
+            if (serverLevel.dimension().equals(Level.END)) {
                 player.displayClientMessage(Component.translatable("msg.teleportcakes.cannot_eat_end_cake"), true);
+                return InteractionResult.PASS;
             }
+
+            ServerLevel targetLevel = serverLevel.getServer().getLevel(Level.END);
+            if (targetLevel == null) {
+                return InteractionResult.FAIL;
+            }
+
+            BlockPos spawnPos = ServerLevel.END_SPAWN_POINT;
+
+            Entity teleportedEntity = player.changeDimension(targetLevel);
+            if (teleportedEntity instanceof Player teleportedPlayer) {
+                teleportedPlayer.teleportTo(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
+            }
+
+            BlockPos cakePos = spawnPos.relative(player.getDirection());
+            while (targetLevel.isEmptyBlock(cakePos.below())) {
+                cakePos = cakePos.below();
+            }
+
+            if (targetLevel.isEmptyBlock(cakePos)) {
+                targetLevel.setBlock(cakePos, BlocksRegistry.overworld_cake.defaultBlockState(), 3);
+            }
+
+            return super.use(state, level, pos, player, hand, hit);
         }
 
-        if (itemStack.getItem() == Items.ENDER_EYE && state.getValue(BITES) > 0 && !level.isClientSide) {
-            level.setBlock(pos, state.setValue(BITES, state.getValue(BITES) - 1), 3);
-            itemStack.shrink(1);
-        }
-
-        if (level.isClientSide && itemStack.isEmpty()) {
-            if (eat(level, pos, state, player).consumesAction()) {
-                return InteractionResult.SUCCESS;
+        if (itemStack.is(Items.ENDER_EYE) && state.getValue(BITES) > 0) {
+            if (!level.isClientSide) {
+                level.setBlock(pos, state.setValue(BITES, state.getValue(BITES) - 1), 3);
+                if (!player.getAbilities().instabuild) {
+                    itemStack.shrink(1);
+                }
             }
-            return InteractionResult.CONSUME;
+            return InteractionResult.sidedSuccess(level.isClientSide);
         }
 
         return InteractionResult.PASS;

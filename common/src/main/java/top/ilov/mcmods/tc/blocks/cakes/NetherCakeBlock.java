@@ -58,46 +58,43 @@ public class NetherCakeBlock extends CakeTeleportBase {
         if (!level.isClientSide && level instanceof ServerLevel serverLevel
                 && !player.isSpectator() && !player.isPassenger()) {
 
-            if (!serverLevel.dimension().equals(Level.NETHER)) {
-                ServerLevel nether = serverLevel.getServer().getLevel(Level.NETHER);
-                if (nether == null) {
-                    return InteractionResult.FAIL;
-                }
-
-                BlockPos spawnPos = NetherTeleportHelper.findSafeNetherSpawn(nether, player);
-                if (spawnPos == null) {
-                    spawnPos = new BlockPos(0, 70, 0);
-                    NetherTeleportHelper.checkPlatformAndPlaceCake(nether, spawnPos, player.getDirection());
-                }
-
-                Vec3 targetPos = spawnPos.getCenter();
-                float yaw = player.getYRot();
-                float pitch = player.getXRot();
-
-                if (player instanceof ServerPlayer serverPlayer) {
-                    serverPlayer.teleportTo(nether, targetPos.x, targetPos.y, targetPos.z, yaw, pitch);
-                }
-
-                NetherTeleportHelper.checkPlatformAndPlaceCake(nether, spawnPos, player.getDirection());
-
-                return eat(level, pos, state, player);
-            } else {
+            if (serverLevel.dimension().equals(Level.NETHER)) {
                 player.displayClientMessage(Component.translatable("msg.teleportcakes.cannot_eat_nether_cake"), true);
                 return InteractionResult.PASS;
             }
-        }
 
-        if (level.isClientSide) {
-            if (eat(level, pos, state, player).consumesAction()) {
-                return InteractionResult.SUCCESS;
+            ServerLevel nether = serverLevel.getServer().getLevel(Level.NETHER);
+            if (nether == null) {
+                return InteractionResult.FAIL;
             }
 
-            if (player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) {
-                return InteractionResult.CONSUME;
+            if (player instanceof ServerPlayer serverPlayer
+                    && !NetherTeleportHelper.hasWorldNetherSpawn(nether)
+                    && !NetherTeleportHelper.hasSavedNetherSpawn(serverPlayer)) {
+                serverPlayer.displayClientMessage(Component.translatable("msg.teleportcakes.creating_nether_spwan_point"), true);
             }
+
+            @NotNull BlockPos spawnPos;
+            if (player instanceof ServerPlayer serverPlayer) {
+                spawnPos = NetherTeleportHelper.getOrCreateNetherSpawn(nether, serverPlayer, player.getDirection());
+            } else {
+                BlockPos found = NetherTeleportHelper.findSafeNetherSpawn(nether, player);
+                spawnPos = found != null ? found : new BlockPos(0, 70, 0);
+                NetherTeleportHelper.checkPlatformAndPlaceCake(nether, spawnPos, player.getDirection());
+            }
+
+            Vec3 targetPos = spawnPos.getCenter();
+            float yaw = player.getYRot();
+            float pitch = player.getXRot();
+
+            if (player instanceof ServerPlayer serverPlayer) {
+                serverPlayer.teleportTo(nether, targetPos.x, targetPos.y, targetPos.z, yaw, pitch);
+            }
+
+            return eat(level, pos, state, player);
         }
 
-        return eat(level, pos, state, player);
+        return super.useWithoutItem(state, level, pos, player, hitResult);
     }
 
     @Override

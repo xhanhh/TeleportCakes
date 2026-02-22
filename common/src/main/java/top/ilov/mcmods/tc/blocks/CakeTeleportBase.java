@@ -44,30 +44,33 @@ public class CakeTeleportBase extends CakeBlock {
     @NotNull
     protected static InteractionResult eat(@NotNull LevelAccessor level, @NotNull BlockPos pos, @NotNull BlockState state,
                                            Player player) {
-        if (!player.canEat(false)) {
+
+        if (player.isSpectator()) {
             return InteractionResult.PASS;
-        } else {
-            player.awardStat(Stats.EAT_CAKE_SLICE);
-            player.getFoodData().eat(2, 0.1F);
-
-            Random random = new Random();
-            if (TeleportCakesMod.CONFIG.isEnable_the_sound_of_eating_cakes() | Services.PLATFORM.isModLoaded("cakechomps")) {
-                ItemStack stack = state.getBlock().getCloneItemStack(level, pos, state);
-                player.playSound(player.getEatingSound(stack), 0.5f + 0.4f * (float) random.nextInt(2),
-                        (random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F);
-            }
-
-            int i = state.getValue(BITES);
-            level.gameEvent(player, GameEvent.EAT, pos);
-            if (i < 6) {
-                level.setBlock(pos, state.setValue(BITES, i + 1), 3);
-            } else {
-                level.removeBlock(pos, false);
-                level.gameEvent(player, GameEvent.BLOCK_DESTROY, pos);
-            }
-
-            return InteractionResult.SUCCESS;
         }
+
+        player.awardStat(Stats.EAT_CAKE_SLICE);
+        if (player.canEat(false)) {
+            player.getFoodData().eat(2, 0.1F);
+        }
+
+        Random random = new Random();
+        if (TeleportCakesMod.CONFIG.isEnable_the_sound_of_eating_cakes() | Services.PLATFORM.isModLoaded("cakechomps")) {
+            ItemStack stack = state.getBlock().getCloneItemStack(level, pos, state);
+            player.playSound(player.getEatingSound(stack), 0.5f + 0.4f * (float) random.nextInt(2),
+                    (random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F);
+        }
+
+        int i = state.getValue(BITES);
+        level.gameEvent(player, GameEvent.EAT, pos);
+        if (i < 6) {
+            level.setBlock(pos, state.setValue(BITES, i + 1), 3);
+        } else {
+            level.removeBlock(pos, false);
+            level.gameEvent(player, GameEvent.BLOCK_DESTROY, pos);
+        }
+
+        return InteractionResult.SUCCESS;
     }
 
 }

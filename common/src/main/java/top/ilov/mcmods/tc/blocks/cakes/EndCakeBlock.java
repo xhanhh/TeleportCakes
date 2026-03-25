@@ -54,7 +54,7 @@ public class EndCakeBlock extends CakeTeleportBase {
                 && !player.isSpectator() && !player.isPassenger()) {
 
             if (serverLevel.dimension().equals(Level.END)) {
-                player.displayClientMessage(Component.translatable("msg.teleportcakes.cannot_eat_end_cake"), true);
+                player.sendOverlayMessage(Component.translatable("msg.teleportcakes.cannot_eat_end_cake"));
                 return InteractionResult.PASS;
             }
 

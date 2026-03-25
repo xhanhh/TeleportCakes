@@ -53,7 +53,7 @@ public class NetherCakeBlock extends CakeTeleportBase {
                 && !player.isSpectator() && !player.isPassenger()) {
 
             if (serverLevel.dimension().equals(Level.NETHER)) {
-                player.displayClientMessage(Component.translatable("msg.teleportcakes.cannot_eat_nether_cake"), true);
+                player.sendOverlayMessage(Component.translatable("msg.teleportcakes.cannot_eat_nether_cake"));
                 return InteractionResult.PASS;
             }
 
@@ -65,7 +65,7 @@ public class NetherCakeBlock extends CakeTeleportBase {
             if (player instanceof ServerPlayer serverPlayer
                     && !NetherTeleportHelper.hasWorldNetherSpawn(nether)
                     && !NetherTeleportHelper.hasSavedNetherSpawn(serverPlayer)) {
-                serverPlayer.displayClientMessage(Component.translatable("msg.teleportcakes.creating_nether_spwan_point"), true);
+                serverPlayer.sendOverlayMessage(Component.translatable("msg.teleportcakes.creating_nether_spwan_point"));
             }
 
             @NotNull BlockPos spawnPos;

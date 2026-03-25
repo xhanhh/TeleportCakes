@@ -8,7 +8,7 @@
         "${mod_author}"
     ],
     "contact": {
-        "homepage": "https://modrinth.com/project/teleportcakes",
+        "homepage": "https://i.ilov.top/mods/teleportcakes",
         "sources": "https://github.com/xhanhh/TeleportCakes",
         "issues": "https://github.com/xhanhh/TeleportCakes/issues"
     },
@@ -33,14 +33,14 @@
         "java": ">=${java_version}"
     },
     "suggests": {
-        "modmenu": "*",
-        "cloth-config2": "*"
+        "modmenu": "*"
     },
     "custom": {
         "modmenu": {
             "update_checker": true,
             "links": {
-                "modmenu.curseforge": "https://www.curseforge.com/minecraft/mc-mods/teleportcakes"
+                "modmenu.curseforge": "https://www.curseforge.com/minecraft/mc-mods/teleportcakes",
+                "modmenu.modrinth": "https://modrinth.com/project/teleportcakes"
             }
         }
     }

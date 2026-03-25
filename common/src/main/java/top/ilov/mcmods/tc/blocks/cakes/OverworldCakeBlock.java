@@ -52,7 +52,7 @@ public class OverworldCakeBlock extends CakeTeleportBase {
 
         if (level.dimension() == Level.OVERWORLD) {
             if (!level.isClientSide()) {
-                player.displayClientMessage(Component.translatable("msg.teleportcakes.cannot_eat_overworld_cake"), true);
+                player.sendOverlayMessage(Component.translatable("msg.teleportcakes.cannot_eat_overworld_cake"));
             }
             return InteractionResult.PASS;
         }

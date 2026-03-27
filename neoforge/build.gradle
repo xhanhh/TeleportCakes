@@ -54,7 +54,7 @@ repositories {
 }
 
 dependencies {
-//    api "me.shedaniel.cloth:cloth-config-neoforge:${cloth_version}"
+    api "me.shedaniel.cloth:cloth-config-neoforge:${cloth_version}"
 //    runtimeOnly "curse.maven:catalogue-459701:${cf_catalogue_version}"
 //    compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
 //    runtimeOnly "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"

@@ -13,7 +13,7 @@ public class CakeMenu implements ModMenuApi {
         if (Services.PLATFORM.isModLoaded("cloth-config2")) {
             return ClothConfig::genConfigScreen;
         } else {
-            return parent -> null;
+            return _ -> null;
         }
     }
 

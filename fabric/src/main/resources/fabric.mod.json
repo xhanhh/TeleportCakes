@@ -21,6 +21,9 @@
         ],
         "client": [
             "top.ilov.mcmods.tc.TCFabricClientMod"
+        ],
+        "modmenu": [
+            "top.ilov.mcmods.tc.integration.modmenu.CakeMenu"
         ]
     },
     "mixins": [
@@ -33,7 +36,8 @@
         "java": ">=${java_version}"
     },
     "suggests": {
-        "modmenu": "*"
+        "modmenu": "*",
+        "cloth-config2": "*"
     },
     "custom": {
         "modmenu": {

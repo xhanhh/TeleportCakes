@@ -45,6 +45,10 @@ public class NetherTeleportHelper {
         return world.getFluidState(pos).is(FluidTags.LAVA);
     }
 
+    private static boolean isFlowingLava(ServerLevel world, BlockPos pos) {
+        return isLava(world, pos) && !world.getFluidState(pos).isSource();
+    }
+
     private static boolean isSolidFloorBlock(ServerLevel world, BlockPos pos) {
         if (isLava(world, pos)) return false;
         return world.getBlockState(pos).isCollisionShapeFullBlock(world, pos);
@@ -303,15 +307,18 @@ public class NetherTeleportHelper {
         return null;
     }
 
-    // 给岩浆拿黑曜石填了
+    // 给岩浆拿空气填了
     private static void sealAgainstLava(ServerLevel world, BlockPos groundCenter) {
 
         for (int dx = -5; dx <= 5; dx++) {
             for (int dz = -5; dz <= 5; dz++) {
-                for (int dy = 0; dy <= 10; dy++) {
+                for (int dy = 0; dy <= 12; dy++) {
                     BlockPos p = groundCenter.offset(dx, dy, dz);
-                    if (isLava(world, p)) {
-                        world.setBlock(p, Blocks.OBSIDIAN.defaultBlockState(), 3);
+                    boolean inCore = Math.abs(dx) <= 2 && Math.abs(dz) <= 2 && dy <= 4;
+                    if (inCore && isLava(world, p)) {
+                        world.setBlock(p, Blocks.AIR.defaultBlockState(), 3);
+                    } else if (!inCore && isFlowingLava(world, p)) {
+                        world.setBlock(p, Blocks.AIR.defaultBlockState(), 3);
                     }
                 }
             }
@@ -481,7 +488,7 @@ public class NetherTeleportHelper {
         for (int dy = 0; dy <= 1; dy++) {
             BlockPos p = spawnPos.above(dy);
             if (isLava(world, p)) {
-                world.setBlock(p, Blocks.OBSIDIAN.defaultBlockState(), 3);
+                world.setBlock(p, Blocks.AIR.defaultBlockState(), 3);
             } else if (!world.isEmptyBlock(p)) {
                 world.destroyBlock(p, false);
             }
@@ -493,7 +500,7 @@ public class NetherTeleportHelper {
                 for (int dy = 2; dy <= 4; dy++) {
                     BlockPos p = groundCenter.offset(dx, dy, dz);
                     if (isLava(world, p)) {
-                        world.setBlock(p, Blocks.OBSIDIAN.defaultBlockState(), 3);
+                        world.setBlock(p, Blocks.AIR.defaultBlockState(), 3);
                     } else if (!world.isEmptyBlock(p)) {
                         world.destroyBlock(p, false);
                     }

@@ -1,0 +1,26 @@
+{
+  "teleportcakes.name": "躍遷蛋糕",
+
+  "block.teleportcakes.end_cake": "終界蛋糕",
+  "block.teleportcakes.overworld_cake": "主世界蛋糕",
+  "block.teleportcakes.nether_cake": "地獄蛋糕",
+
+  "tooltip.teleportcakes.shift": "§7按住§r §eShift§r §7",
+  "tooltip.teleportcakes.end_cake": "§7食用後會將玩家傳送至終界，並在出生點區域生成主世界蛋糕以供返回。",
+  "tooltip.teleportcakes.nether_cake": "§7食用後會將玩家傳送至地獄，並在出生點區域生成主世界蛋糕以供返回。",
+
+  "msg.teleportcakes.cannot_eat_end_cake": "在終界不能食用終界蛋糕",
+  "msg.teleportcakes.cannot_eat_overworld_cake": "在主世界不能食用主世界蛋糕",
+  "msg.teleportcakes.cannot_eat_nether_cake": "在地獄不能食用地獄蛋糕",
+  "msg.teleportcakes.creating_nether_spwan_point": "首次傳送至地獄時，正在尋找並生成傳送平台，請稍候",
+
+  "config.teleportcakes.title": "躍遷蛋糕 - 設定",
+  "config.teleportcakes.general": "一般",
+  "config.teleportcakes.enable_eating_cakes_sound": "啟用食用本模組蛋糕時的音效",
+  "config.teleportcakes.enable_eating_cakes_sound.tooltip": "啟用食用本模組蛋糕時的音效，為原版風格。",
+  "config.teleportcakes.enable_tooltips_for_displaying_item": "啟用顯示物品提示",
+  "config.teleportcakes.enable_tooltips_for_displaying_item.tooltip": "將滑鼠移到部分物品上時，會顯示「§7按住§r §eShift§r」的提示。",
+  
+  "modmenu.nameTranslation.teleportcakes": "Teleport Cakes",
+  "modmenu.descriptionTranslation.teleportcakes": "加入可在各個維度之間往返傳送的蛋糕。"
+}

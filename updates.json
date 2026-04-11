@@ -3,7 +3,8 @@
   "1.21.1": {
     "1.21.1-v2.0.0": "No changelog",
     "1.21.1-v2.0.1": "No changelog",
-    "1.21.1-v2.1.1": "Nether Cake now creates one persistent Nether spawn platform per world and always teleports back to it while keeping the landing area clear and safe. feat: Allow the cake to be eaten at full saturation"
+    "1.21.1-v2.1.1": "Nether Cake now creates one persistent Nether spawn platform per world and always teleports back to it while keeping the landing area clear and safe. feat: Allow the cake to be eaten at full saturation",
+    "1.21.1-v2.1.2": "refine Nether spawn lava cleanup and add zh_tw translation."
   },
   "1.21.5": {
     "1.21.5-v2.0.0": "No changelog"
@@ -26,11 +27,20 @@
     "26.1-v2.1.0.b2": "feat: Allow the cake to be eaten at full saturation"
   },
   "26.1": {
-    "26.1-v2.1.1.b1": "No changelog"
+    "26.1-v2.1.1.b1": "No changelog",
+    "26.1-v2.1.1": "Reintegrate Cloth Config configuration screen.",
+    "26.1-v2.1.2": "refine Nether spawn lava cleanup and add zh_tw translation."
+  },
+  "26.1.1": {
+    "26.1-v2.1.1": "Reintegrate Cloth Config configuration screen.",
+    "26.1-v2.1.2": "refine Nether spawn lava cleanup and add zh_tw translation."
+  },
+  "26.1.2": {
+    "26.1-v2.1.2": "refine Nether spawn lava cleanup and add zh_tw translation."
   },
   "promos": {
-    "1.21.1-latest": "1.21.1-v2.1.1",
-    "1.21.1-recommended": "1.21.1-v2.1.1",
+    "1.21.1-latest": "1.21.1-v2.1.2",
+    "1.21.1-recommended": "1.21.1-v2.1.2",
     "1.21.5-latest": "1.21.5-v2.0.0",
     "1.21.5-recommended": "1.21.5-v2.0.0",
     "1.21.6-latest": "1.21.5-v2.0.0",
@@ -41,7 +51,11 @@
     "1.21.8-recommended": "1.21.5-v2.0.0",
     "1.21.11-latest": "1.21.11-v2.1.1",
     "1.21.11-recommended": "1.21.11-v2.1.1",
-    "26.1-latest": "26.1-v2.1.1.b1",
-    "26.1-recommended": "26.1-v2.1.1.b1"
+    "26.1-latest": "26.1-v2.1.2",
+    "26.1-recommended": "26.1-v2.1.2",
+    "26.1.1-latest": "26.1-v2.1.2",
+    "26.1.1-recommended": "26.1-v2.1.2",
+    "26.1.2-latest": "26.1-v2.1.2",
+    "26.1.2-recommended": "26.1-v2.1.2"
   }
 }

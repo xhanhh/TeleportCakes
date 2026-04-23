@@ -12,6 +12,7 @@
   "msg.teleportcakes.cannot_eat_end_cake": "在終界不能食用終界蛋糕",
   "msg.teleportcakes.cannot_eat_overworld_cake": "在主世界不能食用主世界蛋糕",
   "msg.teleportcakes.cannot_eat_nether_cake": "在地獄不能食用地獄蛋糕",
+  "msg.teleportcakes.cannot_eat_while_riding": "乘騎狀態下不能食用傳送蛋糕",
   "msg.teleportcakes.creating_nether_spwan_point": "首次傳送至地獄時，正在尋找並生成傳送平台，請稍候",
 
   "config.teleportcakes.title": "躍遷蛋糕 - 設定",

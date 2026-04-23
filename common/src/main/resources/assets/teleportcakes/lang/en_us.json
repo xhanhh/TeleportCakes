@@ -12,6 +12,7 @@
   "msg.teleportcakes.cannot_eat_end_cake": "You can't eat End Cake at the end",
   "msg.teleportcakes.cannot_eat_overworld_cake": "You can't eat Overworld Cake at the overworld",
   "msg.teleportcakes.cannot_eat_nether_cake": "You can't eat Nether Cake at the nether",
+  "msg.teleportcakes.cannot_eat_while_riding": "You can't eat teleport cakes while riding",
   "msg.teleportcakes.creating_nether_spwan_point": "First teleport: finding and generating the Nether platform, please wait",
 
   "config.teleportcakes.title": "Teleport Cakes settings",

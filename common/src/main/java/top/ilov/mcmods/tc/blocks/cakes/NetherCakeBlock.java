@@ -13,10 +13,10 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jspecify.annotations.NonNull;
-import top.ilov.mcmods.tc.blocks.CakeTeleportBase;
+import top.ilov.mcmods.tc.blocks.CakeBaseBlock;
 import top.ilov.mcmods.tc.utils.CakeTeleporter;
 
-public class NetherCakeBlock extends CakeTeleportBase {
+public class NetherCakeBlock extends CakeBaseBlock {
 
     public NetherCakeBlock(Properties properties) {
         super(properties);

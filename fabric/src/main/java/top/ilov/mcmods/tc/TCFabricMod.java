@@ -10,6 +10,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import top.ilov.mcmods.tc.blocks.BlocksRegistry;
+import top.ilov.mcmods.tc.items.ItemRegistry;
 
 public class TCFabricMod implements ModInitializer {
     
@@ -32,6 +33,10 @@ public class TCFabricMod implements ModInitializer {
                     entries.accept(BlocksRegistry.overworld_cake.get());
                     entries.accept(BlocksRegistry.nether_cake.get());
                     entries.accept(BlocksRegistry.end_cake.get());
+                    entries.accept(ItemRegistry.paper_liner.get());
+                    entries.accept(ItemRegistry.overworld_cupcake.get());
+                    entries.accept(ItemRegistry.nether_cupcake.get());
+                    entries.accept(ItemRegistry.end_cupcake.get());
                 })
                 .build()
         );

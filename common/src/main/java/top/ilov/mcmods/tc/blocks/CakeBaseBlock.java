@@ -16,9 +16,9 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jspecify.annotations.NonNull;
 
-public abstract class CakeTeleportBase extends CakeBlock {
+public abstract class CakeBaseBlock extends CakeBlock {
 
-    public CakeTeleportBase(Properties properties) {
+    public CakeBaseBlock(Properties properties) {
         super(properties);
     }
 

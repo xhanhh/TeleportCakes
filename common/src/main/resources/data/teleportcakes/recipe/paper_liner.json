@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "A A",
+    " A "
+  ],
+  "key": {
+    "A": "minecraft:paper"
+  },
+  "result": {
+    "id": "teleportcakes:paper_liner",
+    "count": 1
+  }
+}

@@ -31,4 +31,14 @@ public class FabricRegisterHelper implements IRegisterHelper {
         return () -> block;
     }
 
+    @Override
+    public <T extends Item> Supplier<T> registerItem(String name, Supplier<T> itemSupplier) {
+        Identifier id = TeleportCakesMod.rl(name);
+        ResourceKey<Item> itemKey = ResourceKey.create(Registries.ITEM, id);
+        T item = itemSupplier.get();
+
+        Registry.register(BuiltInRegistries.ITEM, itemKey, item);
+        return () -> item;
+    }
+
 }

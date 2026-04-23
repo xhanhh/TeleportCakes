@@ -57,4 +57,9 @@ public class NeoForgeRegisterHelper implements IRegisterHelper {
         return registeredBlock;
     }
 
+    @Override
+    public <T extends Item> Supplier<T> registerItem(String name, Supplier<T> itemSupplier) {
+        return ITEMS.register(name, id -> itemSupplier.get());
+    }
+
 }

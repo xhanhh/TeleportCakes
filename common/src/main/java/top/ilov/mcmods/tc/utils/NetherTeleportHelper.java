@@ -427,20 +427,6 @@ public class NetherTeleportHelper {
         return null;
     }
 
-//    public static boolean hasExistingOverworldCake(ServerLevel world, BlockPos center, int radius) {
-//        for (int dx = -radius; dx <= radius; dx++) {
-//            for (int dy = -1; dy <= 2; dy++) {
-//                for (int dz = -radius; dz <= radius; dz++) {
-//                    BlockPos check = center.offset(dx, dy, dz);
-//                    if (world.getBlockState(check).is(BlocksRegistry.overworld_cake.get())) {
-//                        return true;
-//                    }
-//                }
-//            }
-//        }
-//        return false;
-//    }
-
     public static boolean hasExistingTorch(ServerLevel world, BlockPos center) {
         for (int dx = -1; dx <= 1; dx++) {
             for (int dy = -1; dy <= 2; dy++) {

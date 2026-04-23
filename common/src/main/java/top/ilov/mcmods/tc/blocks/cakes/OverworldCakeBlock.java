@@ -14,10 +14,10 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jspecify.annotations.NonNull;
-import top.ilov.mcmods.tc.blocks.CakeTeleportBase;
+import top.ilov.mcmods.tc.blocks.CakeBaseBlock;
 import top.ilov.mcmods.tc.utils.CakeTeleporter;
 
-public class OverworldCakeBlock extends CakeTeleportBase {
+public class OverworldCakeBlock extends CakeBaseBlock {
 
     public OverworldCakeBlock(Properties properties) {
         super(properties);

@@ -3,7 +3,6 @@ package top.ilov.mcmods.tc.utils;
 import lombok.experimental.UtilityClass;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
@@ -31,11 +30,6 @@ public class CakeTeleporter {
         ServerLevel nether = sourceLevel.getServer().getLevel(Level.NETHER);
         if (nether == null) {
             return false;
-        }
-
-        if (!NetherTeleportHelper.hasWorldNetherSpawn(nether)
-                && !NetherTeleportHelper.hasSavedNetherSpawn(player)) {
-            player.sendOverlayMessage(Component.translatable("msg.teleportcakes.creating_nether_spwan_point"));
         }
 
         BlockPos spawnPos = NetherTeleportHelper.getOrCreateNetherSpawn(nether, player, player.getDirection());

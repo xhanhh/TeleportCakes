@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.FluidTags;
@@ -40,6 +41,20 @@ public class NetherTeleportHelper {
             .disableHtmlEscaping()
             .setPrettyPrinting()
             .create();
+
+    // 看看要不要提示一下玩家传送已经开始了，找下界重生点要点时间
+    public static boolean shouldShowPreparingSpawnMsg(ServerLevel sourceLevel, ServerPlayer player) {
+
+        ServerLevel nether = sourceLevel.getServer().getLevel(Level.NETHER);
+        return nether != null
+                && !hasWorldNetherSpawn(nether)
+                && !hasSavedNetherSpawn(player);
+
+    }
+
+    public static void showPreparingSpawnMsg(ServerPlayer player) {
+        player.sendOverlayMessage(Component.translatable("msg.teleportcakes.creating_nether_spwan_point"));
+    }
 
     private static boolean isLava(ServerLevel world, BlockPos pos) {
         return world.getFluidState(pos).is(FluidTags.LAVA);
@@ -525,4 +540,5 @@ public class NetherTeleportHelper {
         }
         return null;
     }
+
 }

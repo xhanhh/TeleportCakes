@@ -15,6 +15,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import org.jspecify.annotations.NonNull;
 import top.ilov.mcmods.tc.blocks.CakeBaseBlock;
 import top.ilov.mcmods.tc.utils.CakeTeleporter;
+import top.ilov.mcmods.tc.utils.NetherTeleportHelper;
 
 public class NetherCakeBlock extends CakeBaseBlock {
 
@@ -54,6 +55,11 @@ public class NetherCakeBlock extends CakeBaseBlock {
 
     @Override
     protected boolean teleport(@NonNull ServerLevel level, @NonNull BlockPos pos, @NonNull ServerPlayer player) {
+
+        if (NetherTeleportHelper.shouldShowPreparingSpawnMsg(level, player)) {
+            NetherTeleportHelper.showPreparingSpawnMsg(player);
+        }
+
         return CakeTeleporter.teleportToNether(level, player);
     }
 

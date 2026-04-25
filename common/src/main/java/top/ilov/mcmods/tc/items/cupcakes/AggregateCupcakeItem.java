@@ -21,6 +21,7 @@ import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import top.ilov.mcmods.tc.TeleportCakesMod;
 import top.ilov.mcmods.tc.items.AggregateCupcakeDestination;
+import top.ilov.mcmods.tc.utils.NetherTeleportHelper;
 
 import java.util.function.Consumer;
 
@@ -44,6 +45,16 @@ public class AggregateCupcakeItem extends Item {
                 player.sendOverlayMessage(Component.translatable(blockedMessageKey));
             }
             return InteractionResult.PASS;
+        }
+
+        if (!level.isClientSide()
+                && level instanceof ServerLevel serverLevel
+                && player instanceof ServerPlayer serverPlayer
+                && getSelectedDestination(stack) == AggregateCupcakeDestination.NETHER
+                && NetherTeleportHelper.shouldShowPreparingSpawnMsg(serverLevel, serverPlayer)) {
+
+            NetherTeleportHelper.showPreparingSpawnMsg(serverPlayer);
+
         }
 
         player.startUsingItem(hand);

@@ -12,7 +12,7 @@
 
   "tooltip.teleportcakes.shift": "§7按住§r §eShift§r §7",
   "tooltip.teleportcakes.aggregate_cupcake": "§7透過§r §eShift§r §7+§r §e滑鼠滾輪§r §7切換目標維度，食用以傳送。",
-  "tooltip.teleportcakes.aggregate_cupcake.selected": "§7目標維度：§7%s",
+  "tooltip.teleportcakes.aggregate_cupcake.selected": "§7目標維度：%s",
   "tooltip.teleportcakes.end_cake": "§7食用後會將玩家傳送至終界，並在出生點區域生成主世界蛋糕以供返回。",
   "tooltip.teleportcakes.nether_cake": "§7食用後會將玩家傳送至地獄，並在出生點區域生成主世界蛋糕以供返回。",
   "tooltip.teleportcakes.overworld_cupcake": "§7食用後會將玩家傳送至主世界重生點。",
@@ -30,9 +30,9 @@
   "msg.teleportcakes.aggregate_cupcake_on_cooldown": "聚合紙杯蛋糕正在冷卻中",
 
   "message.teleportcakes.aggregate_cupcake.current_destination": "目前目標維度：%s",
-  "destination.teleportcakes.overworld": "主世界",
-  "destination.teleportcakes.nether": "地獄",
-  "destination.teleportcakes.end": "終界",
+  "destination.teleportcakes.overworld": "§5主世界",
+  "destination.teleportcakes.nether": "§5地獄",
+  "destination.teleportcakes.end": "§5終界",
 
   "config.teleportcakes.title": "躍遷蛋糕 - 設定",
   "config.teleportcakes.general": "一般",

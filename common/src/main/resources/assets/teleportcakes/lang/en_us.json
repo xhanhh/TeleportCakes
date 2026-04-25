@@ -12,7 +12,7 @@
 
   "tooltip.teleportcakes.shift": "§7Hold§r §eShift",
   "tooltip.teleportcakes.aggregate_cupcake": "§7Hold §eShift§r and scroll to change destination, then eat to teleport.",
-  "tooltip.teleportcakes.aggregate_cupcake.selected": "§7Target dimension: §7%s",
+  "tooltip.teleportcakes.aggregate_cupcake.selected": "§7Target dimension: %s",
   "tooltip.teleportcakes.end_cake": "§7When eaten it will transport you to the End, an Overworld Cake will then be generated at the end.",
   "tooltip.teleportcakes.nether_cake": "§7When eaten it will transport you to the Nether, an Overworld Cake will then be generated at the nether.",
   "tooltip.teleportcakes.overworld_cupcake": "§7When eaten it will transport you to your Overworld respawn point.",
@@ -30,9 +30,9 @@
   "msg.teleportcakes.aggregate_cupcake_on_cooldown": "Aggregate Cupcake are currently on cooldown",
 
   "message.teleportcakes.aggregate_cupcake.current_destination": "Transport target dimension: %s",
-  "destination.teleportcakes.overworld": "Overworld",
-  "destination.teleportcakes.nether": "Nether",
-  "destination.teleportcakes.end": "End",
+  "destination.teleportcakes.overworld": "§5Overworld",
+  "destination.teleportcakes.nether": "§5Nether",
+  "destination.teleportcakes.end": "§5End",
 
   "config.teleportcakes.title": "Teleport Cakes settings",
   "config.teleportcakes.general": "General",

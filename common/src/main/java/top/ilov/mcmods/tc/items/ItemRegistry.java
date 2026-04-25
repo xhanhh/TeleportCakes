@@ -5,6 +5,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import top.ilov.mcmods.tc.TeleportCakesMod;
+import top.ilov.mcmods.tc.items.cupcakes.AggregateCupcakeItem;
 import top.ilov.mcmods.tc.items.cupcakes.EndCupcakeItem;
 import top.ilov.mcmods.tc.items.cupcakes.NetherCupcakeItem;
 import top.ilov.mcmods.tc.items.cupcakes.OverworldCupcakeItem;
@@ -22,6 +23,14 @@ public class ItemRegistry {
                     .setId(ResourceKey.create(Registries.ITEM, id))
                     .useItemDescriptionPrefix()
                     .stacksTo(64))
+    );
+
+    public static final Supplier<Item> aggregate_cupcake = registerItem("aggregate_cupcake",
+            id -> new AggregateCupcakeItem(new Item.Properties()
+                    .setId(ResourceKey.create(Registries.ITEM, id))
+                    .useItemDescriptionPrefix()
+                    .stacksTo(1)
+                    .food(CUPCAKE_FOOD))
     );
 
     public static final Supplier<Item> overworld_cupcake = registerCupcake("overworld_cupcake",

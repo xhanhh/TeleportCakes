@@ -5,14 +5,17 @@
   "block.teleportcakes.overworld_cake": "主世界蛋糕",
   "block.teleportcakes.nether_cake": "下界蛋糕",
   "item.teleportcakes.paper_liner": "纸托",
+  "item.teleportcakes.aggregate_cupcake": "聚合纸杯蛋糕",
   "item.teleportcakes.overworld_cupcake": "主世界纸杯蛋糕",
   "item.teleportcakes.nether_cupcake": "下界纸杯蛋糕",
   "item.teleportcakes.end_cupcake": "末地纸杯蛋糕",
 
   "tooltip.teleportcakes.shift": "§7按住§r §eShift§r §7",
+  "tooltip.teleportcakes.aggregate_cupcake": "§7通过§r §eShift§r §7+§r §e鼠标滚轮§r §7切换目标维度，食用以传送。",
+  "tooltip.teleportcakes.aggregate_cupcake.selected": "§7目标维度：§7%s",
   "tooltip.teleportcakes.end_cake": "§7食用后会将玩家传送至末地，在出生点区域会生成主世界蛋糕以供返回。",
   "tooltip.teleportcakes.nether_cake": "§7食用后会将玩家传送至下界，在出生点区域会生成主世界蛋糕以供返回。",
-  "tooltip.teleportcakes.overworld_cupcake": "§7食用后会将玩家传送至主世界。",
+  "tooltip.teleportcakes.overworld_cupcake": "§7食用后会将玩家传送至主世界重生点。",
   "tooltip.teleportcakes.nether_cupcake": "§7食用后会将玩家传送至下界。",
   "tooltip.teleportcakes.end_cupcake": "§7食用后会将玩家传送至末地。",
 
@@ -24,11 +27,15 @@
   "msg.teleportcakes.cannot_eat_nether_cupcake": "在下界不能食用下界纸杯蛋糕",
   "msg.teleportcakes.cannot_eat_while_riding": "乘骑状态下不能食用传送蛋糕",
   "msg.teleportcakes.creating_nether_spwan_point": "首次传送至下界正在查找并生成传送平台，请稍停留",
+  "msg.teleportcakes.aggregate_cupcake_on_cooldown": "聚合纸杯蛋糕正在冷却中",
+
+  "message.teleportcakes.aggregate_cupcake.current_destination": "传送目标维度：%s",
+  "destination.teleportcakes.overworld": "主世界",
+  "destination.teleportcakes.nether": "下界",
+  "destination.teleportcakes.end": "末地",
 
   "config.teleportcakes.title": "跃迁蛋糕 - 设置",
   "config.teleportcakes.general": "通用",
-  "config.teleportcakes.enable_eating_cakes_sound": "启用食用本模组蛋糕时的音效",
-  "config.teleportcakes.enable_eating_cakes_sound.tooltip": "启用食用本模组蛋糕时的音效，为原版风格。",
   "config.teleportcakes.enable_tooltips_for_displaying_item": "启用显示物品的Tooltips",
   "config.teleportcakes.enable_tooltips_for_displaying_item.tooltip": "鼠标移到一些物品上，有‘§7按住§r §eShift§r’字样的提示。",
   

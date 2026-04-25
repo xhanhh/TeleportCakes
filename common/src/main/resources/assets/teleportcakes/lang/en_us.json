@@ -5,11 +5,14 @@
   "block.teleportcakes.overworld_cake": "Overworld Cake",
   "block.teleportcakes.nether_cake": "Nether Cake",
   "item.teleportcakes.paper_liner": "Paper Liner",
+  "item.teleportcakes.aggregate_cupcake": "Aggregate Cupcake",
   "item.teleportcakes.overworld_cupcake": "Overworld Cupcake",
   "item.teleportcakes.nether_cupcake": "Nether Cupcake",
   "item.teleportcakes.end_cupcake": "End Cupcake",
 
   "tooltip.teleportcakes.shift": "§7Hold§r §eShift",
+  "tooltip.teleportcakes.aggregate_cupcake": "§7Hold §eShift§r and scroll to change destination, then eat to teleport.",
+  "tooltip.teleportcakes.aggregate_cupcake.selected": "§7Target dimension: §7%s",
   "tooltip.teleportcakes.end_cake": "§7When eaten it will transport you to the End, an Overworld Cake will then be generated at the end.",
   "tooltip.teleportcakes.nether_cake": "§7When eaten it will transport you to the Nether, an Overworld Cake will then be generated at the nether.",
   "tooltip.teleportcakes.overworld_cupcake": "§7When eaten it will transport you to your Overworld respawn point.",
@@ -24,11 +27,15 @@
   "msg.teleportcakes.cannot_eat_nether_cupcake": "You can't eat Nether Cupcake at the nether",
   "msg.teleportcakes.cannot_eat_while_riding": "You can't eat teleport cakes while riding",
   "msg.teleportcakes.creating_nether_spwan_point": "First teleport: finding and generating the Nether platform, please wait",
+  "msg.teleportcakes.aggregate_cupcake_on_cooldown": "Aggregate Cupcake are currently on cooldown",
+
+  "message.teleportcakes.aggregate_cupcake.current_destination": "Transport target dimension: %s",
+  "destination.teleportcakes.overworld": "Overworld",
+  "destination.teleportcakes.nether": "Nether",
+  "destination.teleportcakes.end": "End",
 
   "config.teleportcakes.title": "Teleport Cakes settings",
   "config.teleportcakes.general": "General",
-  "config.teleportcakes.enable_eating_cakes_sound": "Enable sound when eating cakes from this mod.",
-  "config.teleportcakes.enable_eating_cakes_sound.tooltip": "Enable sound when eating cakes from this mod.",
   "config.teleportcakes.enable_tooltips_for_displaying_item": "Enable tooltips for displaying items",
   "config.teleportcakes.enable_tooltips_for_displaying_item.tooltip": "A prompt with the words '§7Hold§r §eShift§r'.",
  

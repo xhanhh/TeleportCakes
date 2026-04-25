@@ -24,6 +24,7 @@ public class NeoForgeItemGroup {
                 entries.accept(BlocksRegistry.nether_cake.get());
                 entries.accept(BlocksRegistry.end_cake.get());
                 entries.accept(ItemRegistry.paper_liner.get());
+                entries.accept(ItemRegistry.aggregate_cupcake.get());
                 entries.accept(ItemRegistry.overworld_cupcake.get());
                 entries.accept(ItemRegistry.nether_cupcake.get());
                 entries.accept(ItemRegistry.end_cupcake.get());

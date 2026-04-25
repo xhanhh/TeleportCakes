@@ -13,6 +13,7 @@
   "tooltip.teleportcakes.shift": "§7按住§r §eShift§r §7",
   "tooltip.teleportcakes.aggregate_cupcake": "§7通过§r §eShift§r §7+§r §e鼠标滚轮§r §7切换目标维度，食用以传送。",
   "tooltip.teleportcakes.aggregate_cupcake.selected": "§7目标维度：%s",
+  "tooltip.teleportcakes.aggregate_cupcake.unlimited": "§b「无限次数」",
   "tooltip.teleportcakes.end_cake": "§7食用后会将玩家传送至末地，在出生点区域会生成主世界蛋糕以供返回。",
   "tooltip.teleportcakes.nether_cake": "§7食用后会将玩家传送至下界，在出生点区域会生成主世界蛋糕以供返回。",
   "tooltip.teleportcakes.overworld_cupcake": "§7食用后会将玩家传送至主世界重生点。",

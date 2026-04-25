@@ -110,6 +110,7 @@ public class AggregateCupcakeItem extends Item {
 
         if (Minecraft.getInstance().hasShiftDown()) {
             components.accept(Component.translatable("tooltip.teleportcakes.aggregate_cupcake"));
+            components.accept(Component.translatable("tooltip.teleportcakes.aggregate_cupcake.unlimited"));
         } else {
             components.accept(Component.translatable("tooltip.teleportcakes.shift"));
         }

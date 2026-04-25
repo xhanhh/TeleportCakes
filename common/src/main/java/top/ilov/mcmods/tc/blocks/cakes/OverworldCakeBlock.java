@@ -1,7 +1,6 @@
 package top.ilov.mcmods.tc.blocks.cakes;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -13,12 +12,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
-import net.minecraft.world.level.portal.TeleportTransition;
 import net.minecraft.world.phys.BlockHitResult;
-import org.jetbrains.annotations.NotNull;
-import top.ilov.mcmods.tc.blocks.CakeTeleportBase;
+import org.jspecify.annotations.NonNull;
+import top.ilov.mcmods.tc.blocks.CakeBaseBlock;
+import top.ilov.mcmods.tc.utils.CakeTeleporter;
 
-public class OverworldCakeBlock extends CakeTeleportBase {
+public class OverworldCakeBlock extends CakeBaseBlock {
 
     public OverworldCakeBlock(Properties properties) {
         super(properties);
@@ -27,9 +26,9 @@ public class OverworldCakeBlock extends CakeTeleportBase {
     public static final IntegerProperty BITES = BlockStateProperties.BITES;
 
     @Override
-    @NotNull
-    public InteractionResult useItemOn(@NotNull ItemStack stack, @NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos,
-                                           Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hitResult) {
+    @NonNull
+    public InteractionResult useItemOn(@NonNull ItemStack stack, @NonNull BlockState state, @NonNull Level level, @NonNull BlockPos pos,
+                                           Player player, @NonNull InteractionHand hand, @NonNull BlockHitResult hitResult) {
         ItemStack itemStack = player.getItemInHand(hand);
 
         if (itemStack.getItem() == Items.MILK_BUCKET && state.getValue(BITES) > 0 && !level.isClientSide()) {
@@ -44,31 +43,19 @@ public class OverworldCakeBlock extends CakeTeleportBase {
     }
 
     @Override
-    @NotNull
-    public InteractionResult useWithoutItem(@NotNull BlockState state, Level level, @NotNull BlockPos pos,
-                                            @NotNull Player player, @NotNull BlockHitResult hitResult) {
-
-        if (player.isSpectator()) return InteractionResult.PASS;
-
-        if (level.dimension() == Level.OVERWORLD) {
-            if (!level.isClientSide()) {
-                player.sendOverlayMessage(Component.translatable("msg.teleportcakes.cannot_eat_overworld_cake"));
-            }
-            return InteractionResult.PASS;
-        }
-
-        if (!level.isClientSide() && level instanceof ServerLevel && player instanceof ServerPlayer serverPlayer) {
-
-            TeleportTransition teleportTransition = serverPlayer.findRespawnPositionAndUseSpawnBlock(
-                    false, TeleportTransition.DO_NOTHING
-            );
-            serverPlayer.teleport(teleportTransition);
-            return eat(level, pos, state, player);
-
-        }
-
-        return super.useWithoutItem(state, level, pos, player, hitResult);
+    protected boolean isTeleportBlocked(@NonNull ServerLevel level) {
+        return level.dimension() == Level.OVERWORLD;
     }
 
+    @Override
+    @NonNull
+    protected String getTeleportBlockedMessageKey() {
+        return "msg.teleportcakes.cannot_eat_overworld_cake";
+    }
+
+    @Override
+    protected boolean teleport(@NonNull ServerLevel level, @NonNull BlockPos pos, @NonNull ServerPlayer player) {
+        return CakeTeleporter.teleportToOverworld(player);
+    }
 
 }

@@ -12,7 +12,7 @@ import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 import top.ilov.mcmods.tc.TeleportCakesMod;
 import top.ilov.mcmods.tc.platform.services.IRegisterHelper;
 
@@ -36,17 +36,22 @@ public class NeoForgeRegisterHelper implements IRegisterHelper {
                         .setId(ResourceKey.create(Registries.ITEM, id))
                         .useBlockDescriptionPrefix()) {
             @Override
-            public void appendHoverText(@NotNull ItemStack pStack, @NotNull TooltipContext pContext,
-                                        @NotNull TooltipDisplay tooltipDisplay, @NotNull Consumer<Component> components,
-                                        @NotNull TooltipFlag tooltipFlag) {
+            public void appendHoverText(@NonNull ItemStack pStack, @NonNull TooltipContext pContext,
+                                        @NonNull TooltipDisplay tooltipDisplay, @NonNull Consumer<Component> components,
+                                        @NonNull TooltipFlag tooltipFlag) {
 
                 if (!TeleportCakesMod.CONFIG.isEnable_tooltips_for_displaying_item()) return;
                 if (name.equals("overworld_cake")) return;
 
-                if (Minecraft.getInstance().hasShiftDown() && Dist.CLIENT.isClient()) {
-                    components.accept(Component.translatable("tooltip.teleportcakes." + name));
-                } else {
-                    components.accept(Component.translatable("tooltip.teleportcakes.shift"));
+                if (TeleportCakesMod.CONFIG.isEnable_tooltips_for_shift_displaying_item()
+                        && Dist.CLIENT.isClient()) {
+
+                    if (Minecraft.getInstance().hasShiftDown()) {
+                        components.accept(Component.translatable("tooltip.teleportcakes." + name));
+                    } else {
+                        components.accept(Component.translatable("tooltip.teleportcakes.shift"));
+                    }
+
                 }
 
                 super.appendHoverText(pStack, pContext, tooltipDisplay, components, tooltipFlag);
@@ -55,6 +60,11 @@ public class NeoForgeRegisterHelper implements IRegisterHelper {
         });
 
         return registeredBlock;
+    }
+
+    @Override
+    public <T extends Item> Supplier<T> registerItem(String name, Supplier<T> itemSupplier) {
+        return ITEMS.register(name, id -> itemSupplier.get());
     }
 
 }

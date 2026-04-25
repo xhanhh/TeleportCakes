@@ -20,21 +20,21 @@ public class ClothConfig {
         ConfigCategory general = builder.getOrCreateCategory(Component.translatable("config.teleportcakes.general"));
         ConfigEntryBuilder entryBuilder = builder.entryBuilder();
 
-//        general.addEntry(entryBuilder
-//                .startBooleanToggle(Component.translatable("config.teleportcakes.enable_eating_cakes_sound"),
-//                        TeleportCakesMod.CONFIG.isEnable_the_sound_of_eating_cakes())
-//                .setDefaultValue(true)
-//                .setTooltip(Component.translatable("config.teleportcakes.enable_eating_cakes_sound.tooltip"))
-//                .setSaveConsumer(newValue -> TeleportCakesMod.CONFIG.setEnable_the_sound_of_eating_cakes(newValue))
-//                .build()
-//        );
-
         general.addEntry(entryBuilder
                 .startBooleanToggle(Component.translatable("config.teleportcakes.enable_tooltips_for_displaying_item"),
                         TeleportCakesMod.CONFIG.isEnable_tooltips_for_displaying_item())
                 .setDefaultValue(true)
                 .setTooltip(Component.translatable("config.teleportcakes.enable_tooltips_for_displaying_item.tooltip"))
                 .setSaveConsumer(newValue -> TeleportCakesMod.CONFIG.setEnable_tooltips_for_displaying_item(newValue))
+                .build()
+        );
+
+        general.addEntry(entryBuilder
+                .startBooleanToggle(Component.translatable("config.teleportcakes.enable_tooltips_for_shift_displaying_item"),
+                        TeleportCakesMod.CONFIG.isEnable_tooltips_for_shift_displaying_item())
+                .setDefaultValue(true)
+                .setTooltip(Component.translatable("config.teleportcakes.enable_tooltips_for_shift_displaying_item.tooltip"))
+                .setSaveConsumer(newValue -> TeleportCakesMod.CONFIG.setEnable_tooltips_for_shift_displaying_item(newValue))
                 .build()
         );
 

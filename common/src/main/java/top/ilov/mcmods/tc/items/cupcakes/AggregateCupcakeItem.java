@@ -108,11 +108,16 @@ public class AggregateCupcakeItem extends Item {
                 getSelectedDestination(stack).getDisplayName()
         ));
 
-        if (Minecraft.getInstance().hasShiftDown()) {
-            components.accept(Component.translatable("tooltip.teleportcakes.aggregate_cupcake"));
-            components.accept(Component.translatable("tooltip.teleportcakes.aggregate_cupcake.unlimited"));
-        } else {
-            components.accept(Component.translatable("tooltip.teleportcakes.shift"));
+        // 非常复杂的逻辑。
+        if (TeleportCakesMod.CONFIG.isEnable_tooltips_for_shift_displaying_item()) {
+
+            if (Minecraft.getInstance().hasShiftDown()) {
+                components.accept(Component.translatable("tooltip.teleportcakes.aggregate_cupcake"));
+                components.accept(Component.translatable("tooltip.teleportcakes.aggregate_cupcake.unlimited"));
+            } else {
+                components.accept(Component.translatable("tooltip.teleportcakes.shift"));
+            }
+
         }
 
         super.appendHoverText(stack, context, tooltipDisplay, components, tooltipFlag);
@@ -157,7 +162,7 @@ public class AggregateCupcakeItem extends Item {
     @NonNull
     public static Component getSelectedDestinationMessage(@NonNull ItemStack stack) {
         return Component.translatable(
-                "message.teleportcakes.aggregate_cupcake.current_destination",
+                "msg.teleportcakes.aggregate_cupcake.current_destination",
                 getSelectedDestination(stack).getDisplayName()
         );
     }

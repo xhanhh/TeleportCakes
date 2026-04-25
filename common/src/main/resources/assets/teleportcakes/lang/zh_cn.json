@@ -30,15 +30,17 @@
   "msg.teleportcakes.creating_nether_spwan_point": "首次传送至下界正在查找并生成传送平台，请稍停留",
   "msg.teleportcakes.aggregate_cupcake_on_cooldown": "聚合纸杯蛋糕正在冷却中",
 
-  "message.teleportcakes.aggregate_cupcake.current_destination": "传送目标维度：%s",
+  "msg.teleportcakes.aggregate_cupcake.current_destination": "传送目标维度：%s",
   "destination.teleportcakes.overworld": "§5主世界",
   "destination.teleportcakes.nether": "§5下界",
   "destination.teleportcakes.end": "§5末地",
 
   "config.teleportcakes.title": "跃迁蛋糕 - 设置",
   "config.teleportcakes.general": "通用",
-  "config.teleportcakes.enable_tooltips_for_displaying_item": "启用显示物品的Tooltips",
-  "config.teleportcakes.enable_tooltips_for_displaying_item.tooltip": "鼠标移到一些物品上，有‘§7按住§r §eShift§r’字样的提示。",
+  "config.teleportcakes.enable_tooltips_for_displaying_item": "启用显示物品的所有Tooltips（总开关）",
+  "config.teleportcakes.enable_tooltips_for_displaying_item.tooltip": "禁用后，包括「§7按住§r §eShift§r」相关提示和其他所有提示都不会显示",
+  "config.teleportcakes.enable_tooltips_for_shift_displaying_item": "启用 按住Shift Tooltip显示",
+  "config.teleportcakes.enable_tooltips_for_shift_displaying_item.tooltip": "禁用后将不会再显示「§7按住§r §eShift§r」和其按下后的提示，其余正常显示",
   
   "modmenu.nameTranslation.teleportcakes": "Teleport Cakes",
   "modmenu.descriptionTranslation.teleportcakes": "添加了用于各维度间传送往返的蛋糕。"

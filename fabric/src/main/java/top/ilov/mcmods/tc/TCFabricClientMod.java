@@ -24,10 +24,14 @@ public class TCFabricClientMod implements ClientModInitializer {
             String translationKey = tooltipMap.get(stack.getItem());
             if (translationKey == null) return;
 
-            if (Minecraft.getInstance().hasShiftDown()) {
-                tooltip.add(Component.translatable(translationKey));
-            } else {
-                tooltip.add(Component.translatable("tooltip.teleportcakes.shift"));
+            if (TeleportCakesMod.CONFIG.isEnable_tooltips_for_shift_displaying_item()) {
+
+                if (Minecraft.getInstance().hasShiftDown()) {
+                    tooltip.add(Component.translatable(translationKey));
+                } else {
+                    tooltip.add(Component.translatable("tooltip.teleportcakes.shift"));
+                }
+
             }
 
         });

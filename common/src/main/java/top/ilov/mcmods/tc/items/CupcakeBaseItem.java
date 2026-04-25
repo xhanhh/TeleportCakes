@@ -65,12 +65,15 @@ public abstract class CupcakeBaseItem extends Item {
                                 @NonNull TooltipDisplay tooltipDisplay, @NonNull Consumer<Component> components,
                                 @NonNull TooltipFlag tooltipFlag) {
 
-        if (TeleportCakesMod.CONFIG.isEnable_tooltips_for_displaying_item()) {
+        if (TeleportCakesMod.CONFIG.isEnable_tooltips_for_displaying_item()
+                && TeleportCakesMod.CONFIG.isEnable_tooltips_for_shift_displaying_item()) {
+
             if (Minecraft.getInstance().hasShiftDown()) {
                 components.accept(Component.translatable(getTooltipTranslationKey()));
             } else {
                 components.accept(Component.translatable("tooltip.teleportcakes.shift"));
             }
+
         }
 
         super.appendHoverText(stack, context, tooltipDisplay, components, tooltipFlag);

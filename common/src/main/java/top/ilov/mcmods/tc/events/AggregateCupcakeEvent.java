@@ -1,5 +1,7 @@
 package top.ilov.mcmods.tc.events;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.protocol.common.ServerboundCustomPayloadPacket;
@@ -10,9 +12,8 @@ import top.ilov.mcmods.tc.items.AggregateCupcakeDestination;
 import top.ilov.mcmods.tc.items.cupcakes.AggregateCupcakeItem;
 import top.ilov.mcmods.tc.network.AggregateCupcakePayload;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class AggregateCupcakeEvent {
-
-    private AggregateCupcakeEvent() {}
 
     public static boolean handleScroll(double scrollDeltaY) {
 

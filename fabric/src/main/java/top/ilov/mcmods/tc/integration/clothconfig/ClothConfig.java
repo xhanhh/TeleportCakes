@@ -29,6 +29,15 @@ public class ClothConfig {
                 .build()
         );
 
+        general.addEntry(entryBuilder
+                .startBooleanToggle(Component.translatable("config.teleportcakes.enable_tooltips_for_shift_displaying_item"),
+                        TeleportCakesMod.CONFIG.isEnable_tooltips_for_shift_displaying_item())
+                .setDefaultValue(true)
+                .setTooltip(Component.translatable("config.teleportcakes.enable_tooltips_for_shift_displaying_item.tooltip"))
+                .setSaveConsumer(newValue -> TeleportCakesMod.CONFIG.setEnable_tooltips_for_shift_displaying_item(newValue))
+                .build()
+        );
+
         return builder.build();
     }
     

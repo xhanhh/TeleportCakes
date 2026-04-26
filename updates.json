@@ -36,7 +36,9 @@
     "26.1-v2.1.2": "refine Nether spawn lava cleanup and add zh_tw translation."
   },
   "26.1.2": {
-    "26.1-v2.1.2": "refine Nether spawn lava cleanup and add zh_tw translation."
+    "26.1-v2.1.2": "refine Nether spawn lava cleanup and add zh_tw translation.",
+    "26.1.2-v3.0.0": "Adds Overworld Cupcake, Nether Cupcake, End Cupcake and Aggregate Cupcake.",
+    "26.1.2-v3.0.1": "Fix an issue where Aggregate Cupcake would display an issue with saturation."
   },
   "promos": {
     "1.21.1-latest": "1.21.1-v2.1.2",
@@ -55,7 +57,7 @@
     "26.1-recommended": "26.1-v2.1.2",
     "26.1.1-latest": "26.1-v2.1.2",
     "26.1.1-recommended": "26.1-v2.1.2",
-    "26.1.2-latest": "26.1-v2.1.2",
-    "26.1.2-recommended": "26.1-v2.1.2"
+    "26.1.2-latest": "26.1.2-v3.0.1",
+    "26.1.2-recommended": "26.1.2-v3.0.1"
   }
 }

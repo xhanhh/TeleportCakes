@@ -4,6 +4,9 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemUseAnimation;
+import net.minecraft.world.item.component.Consumable;
+import net.minecraft.sounds.SoundEvents;
 import top.ilov.mcmods.tc.TeleportCakesMod;
 import top.ilov.mcmods.tc.items.cupcakes.AggregateCupcakeItem;
 import top.ilov.mcmods.tc.items.cupcakes.EndCupcakeItem;
@@ -17,6 +20,13 @@ import java.util.function.Supplier;
 public class ItemRegistry {
 
     private static final FoodProperties CUPCAKE_FOOD = new FoodProperties(2, 0.1F, true);
+    private static final FoodProperties AGGREGATE_CUPCAKE_FOOD = new FoodProperties(0, 0.0F, true);
+
+    private static final Consumable AGGREGATE_CUPCAKE_CONSUMABLE = Consumable.builder()
+            .consumeSeconds(1.0F)
+            .animation(ItemUseAnimation.EAT)
+            .sound(SoundEvents.GENERIC_EAT)
+            .build();
 
     public static final Supplier<Item> paper_liner = registerItem("paper_liner",
             id -> new Item(new Item.Properties()
@@ -30,7 +40,7 @@ public class ItemRegistry {
                     .setId(ResourceKey.create(Registries.ITEM, id))
                     .useItemDescriptionPrefix()
                     .stacksTo(1)
-                    .food(CUPCAKE_FOOD))
+                    .food(AGGREGATE_CUPCAKE_FOOD, AGGREGATE_CUPCAKE_CONSUMABLE))
     );
 
     public static final Supplier<Item> overworld_cupcake = registerCupcake("overworld_cupcake",

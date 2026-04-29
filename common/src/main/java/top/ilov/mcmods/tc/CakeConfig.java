@@ -23,16 +23,16 @@ public final class CakeConfig {
 
     private static final String FILE_NAME = "teleportcakes-common.json";
 
-    private static final boolean DEFAULT_ENABLE_THE_SOUND_OF_EATING_CAKES = false;
     private static final boolean DEFAULT_ENABLE_TOOLTIPS_FOR_DISPLAYING_ITEM = true;
+    private static final boolean DEFAULT_ENABLE_TOOLTIPS_FOR_SHIFT_DISPLAYING_ITEM = true;
 
     private static final Gson GSON = new GsonBuilder()
             .disableHtmlEscaping()
             .setPrettyPrinting()
             .create();
 
-    private boolean enable_the_sound_of_eating_cakes = DEFAULT_ENABLE_THE_SOUND_OF_EATING_CAKES;
     private boolean enable_tooltips_for_displaying_item = DEFAULT_ENABLE_TOOLTIPS_FOR_DISPLAYING_ITEM;
+    private boolean enable_tooltips_for_shift_displaying_item = DEFAULT_ENABLE_TOOLTIPS_FOR_SHIFT_DISPLAYING_ITEM;
 
     private static Path configPath() {
         return Services.PLATFORM.getConfigDir().resolve(FILE_NAME);
@@ -80,8 +80,8 @@ public final class CakeConfig {
         }
 
         boolean changed = false;
-        if (!json.has("enable_the_sound_of_eating_cakes")) {
-            loaded.enable_the_sound_of_eating_cakes = DEFAULT_ENABLE_THE_SOUND_OF_EATING_CAKES;
+        if (!json.has("enable_tooltips_for_shift_displaying_item")) {
+            loaded.enable_tooltips_for_shift_displaying_item = DEFAULT_ENABLE_TOOLTIPS_FOR_SHIFT_DISPLAYING_ITEM;
             changed = true;
         }
         if (!json.has("enable_tooltips_for_displaying_item")) {

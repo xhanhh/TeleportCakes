@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.FluidTags;
@@ -85,6 +86,21 @@ public class NetherTeleportHelper {
 
     public static boolean hasSavedNetherSpawn(ServerPlayer player) {
         return getSavedNetherSpawn(player) != null;
+    }
+
+    public static boolean shouldShowPreparingSpawnMsg(ServerLevel sourceLevel, ServerPlayer player) {
+        if (sourceLevel.dimension().equals(Level.NETHER)) {
+            return false;
+        }
+
+        ServerLevel nether = sourceLevel.getServer().getLevel(Level.NETHER);
+        return nether != null
+                && !hasWorldNetherSpawn(nether)
+                && !hasSavedNetherSpawn(player);
+    }
+
+    public static void showPreparingSpawnMsg(ServerPlayer player) {
+        player.displayClientMessage(Component.translatable("msg.teleportcakes.creating_nether_spwan_point"), true);
     }
 
     @Nullable
@@ -426,20 +442,6 @@ public class NetherTeleportHelper {
         }
         return null;
     }
-
-//    public static boolean hasExistingOverworldCake(ServerLevel world, BlockPos center, int radius) {
-//        for (int dx = -radius; dx <= radius; dx++) {
-//            for (int dy = -1; dy <= 2; dy++) {
-//                for (int dz = -radius; dz <= radius; dz++) {
-//                    BlockPos check = center.offset(dx, dy, dz);
-//                    if (world.getBlockState(check).is(BlocksRegistry.overworld_cake.get())) {
-//                        return true;
-//                    }
-//                }
-//            }
-//        }
-//        return false;
-//    }
 
     public static boolean hasExistingTorch(ServerLevel world, BlockPos center) {
         for (int dx = -1; dx <= 1; dx++) {

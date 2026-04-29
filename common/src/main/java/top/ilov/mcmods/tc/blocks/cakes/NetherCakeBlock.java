@@ -6,7 +6,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -17,15 +16,15 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import top.ilov.mcmods.tc.TeleportCakesMod;
-import top.ilov.mcmods.tc.blocks.CakeTeleportBase;
+import top.ilov.mcmods.tc.blocks.CakeBaseBlock;
+import top.ilov.mcmods.tc.utils.CakeTeleporter;
 import top.ilov.mcmods.tc.utils.NetherTeleportHelper;
 
 import java.util.List;
 
-public class NetherCakeBlock extends CakeTeleportBase {
+public class NetherCakeBlock extends CakeBaseBlock {
 
     public NetherCakeBlock(Properties properties) {
         super(properties);
@@ -51,50 +50,24 @@ public class NetherCakeBlock extends CakeTeleportBase {
     }
 
     @Override
+    protected boolean isTeleportBlocked(@NotNull ServerLevel level) {
+        return level.dimension().equals(Level.NETHER);
+    }
+
+    @Override
     @NotNull
-    public InteractionResult useWithoutItem(@NotNull BlockState state, Level level, @NotNull BlockPos pos,
-                                            @NotNull Player player, @NotNull BlockHitResult hitResult) {
+    protected String getTeleportBlockedMessageKey() {
+        return "msg.teleportcakes.cannot_eat_nether_cake";
+    }
 
-        if (!level.isClientSide && level instanceof ServerLevel serverLevel
-                && !player.isSpectator() && !player.isPassenger()) {
+    @Override
+    protected boolean teleport(@NotNull ServerLevel level, @NotNull BlockPos pos, @NotNull ServerPlayer player) {
 
-            if (serverLevel.dimension().equals(Level.NETHER)) {
-                player.displayClientMessage(Component.translatable("msg.teleportcakes.cannot_eat_nether_cake"), true);
-                return InteractionResult.PASS;
-            }
-
-            ServerLevel nether = serverLevel.getServer().getLevel(Level.NETHER);
-            if (nether == null) {
-                return InteractionResult.FAIL;
-            }
-
-            if (player instanceof ServerPlayer serverPlayer
-                    && !NetherTeleportHelper.hasWorldNetherSpawn(nether)
-                    && !NetherTeleportHelper.hasSavedNetherSpawn(serverPlayer)) {
-                serverPlayer.displayClientMessage(Component.translatable("msg.teleportcakes.creating_nether_spwan_point"), true);
-            }
-
-            @NotNull BlockPos spawnPos;
-            if (player instanceof ServerPlayer serverPlayer) {
-                spawnPos = NetherTeleportHelper.getOrCreateNetherSpawn(nether, serverPlayer, player.getDirection());
-            } else {
-                BlockPos found = NetherTeleportHelper.findSafeNetherSpawn(nether, player);
-                spawnPos = found != null ? found : new BlockPos(0, 70, 0);
-                NetherTeleportHelper.checkPlatformAndPlaceCake(nether, spawnPos, player.getDirection());
-            }
-
-            Vec3 targetPos = spawnPos.getCenter();
-            float yaw = player.getYRot();
-            float pitch = player.getXRot();
-
-            if (player instanceof ServerPlayer serverPlayer) {
-                serverPlayer.teleportTo(nether, targetPos.x, targetPos.y, targetPos.z, yaw, pitch);
-            }
-
-            return eat(level, pos, state, player);
+        if (NetherTeleportHelper.shouldShowPreparingSpawnMsg(level, player)) {
+            NetherTeleportHelper.showPreparingSpawnMsg(player);
         }
 
-        return super.useWithoutItem(state, level, pos, player, hitResult);
+        return CakeTeleporter.teleportToNether(level, player);
     }
 
     @Override
@@ -103,10 +76,12 @@ public class NetherCakeBlock extends CakeTeleportBase {
 
         if (!TeleportCakesMod.CONFIG.isEnable_tooltips_for_displaying_item()) return;
 
-        if (Screen.hasShiftDown()) {
-            tooltipComponents.add(Component.translatable("tooltip.teleportcakes.nether_cake"));
-        } else {
-            tooltipComponents.add(Component.translatable("tooltip.teleportcakes.shift"));
+        if (TeleportCakesMod.CONFIG.isEnable_tooltips_for_shift_displaying_item()) {
+            if (Screen.hasShiftDown()) {
+                tooltipComponents.add(Component.translatable("tooltip.teleportcakes.nether_cake"));
+            } else {
+                tooltipComponents.add(Component.translatable("tooltip.teleportcakes.shift"));
+            }
         }
 
     }

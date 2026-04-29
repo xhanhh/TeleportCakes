@@ -1,0 +1,35 @@
+{
+  "type": "minecraft:crafting_shaped",
+
+  "pattern":
+  [
+    " A ",
+    "BDC"
+  ],
+
+  "key":
+  {
+    "A":
+    {
+      "item": "minecraft:nether_star"
+    },
+    "B":
+    {
+      "item": "teleportcakes:end_cupcake"
+    },
+    "C":
+    {
+      "item": "teleportcakes:overworld_cupcake"
+    },
+    "D":
+    {
+      "item": "teleportcakes:nether_cupcake"
+    }
+  },
+
+  "result":
+  {
+    "id": "teleportcakes:aggregate_cupcake",
+    "count": 1
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "type": "minecraft:crafting_shaped",
+
+  "pattern":
+  [
+    " A ",
+    "BDC",
+    " E "
+  ],
+
+  "key":
+  {
+    "A":
+    {
+      "tag": "c:milks"
+    },
+    "B":
+    {
+      "item": "minecraft:obsidian"
+
+    },
+    "C":
+    {
+      "item": "minecraft:flint"
+    },
+    "D":
+    {
+      "item": "minecraft:wheat"
+    },
+    "E":
+    {
+      "item": "teleportcakes:paper_liner"
+    }
+  },
+
+  "result":
+  {
+    "id": "teleportcakes:nether_cupcake",
+    "count": 2
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "type": "minecraft:crafting_shaped",
+
+  "pattern":
+  [
+    " A ",
+    "BDC",
+    " E "
+  ],
+
+  "key":
+  {
+    "A":
+    {
+      "tag": "c:milks"
+    },
+    "B":
+    {
+      "item": "minecraft:ender_eye"
+
+    },
+    "C":
+    {
+      "item": "minecraft:soul_sand"
+    },
+    "D":
+    {
+      "item": "minecraft:wheat"
+    },
+    "E":
+    {
+      "item": "teleportcakes:paper_liner"
+    }
+  },
+
+  "result":
+  {
+    "id": "teleportcakes:end_cupcake",
+    "count": 2
+  }
+}

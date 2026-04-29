@@ -4,7 +4,8 @@
     "1.21.1-v2.0.0": "No changelog",
     "1.21.1-v2.0.1": "No changelog",
     "1.21.1-v2.1.1": "Nether Cake now creates one persistent Nether spawn platform per world and always teleports back to it while keeping the landing area clear and safe. feat: Allow the cake to be eaten at full saturation",
-    "1.21.1-v2.1.2": "refine Nether spawn lava cleanup and add zh_tw translation."
+    "1.21.1-v2.1.2": "refine Nether spawn lava cleanup and add zh_tw translation.",
+    "1.21.1-v3.0.1": "Adds Overworld Cupcake, Nether Cupcake, End Cupcake and Aggregate Cupcake."
   },
   "1.21.5": {
     "1.21.5-v2.0.0": "No changelog"
@@ -41,8 +42,8 @@
     "26.1.2-v3.0.1": "Fix an issue where Aggregate Cupcake would display an issue with saturation."
   },
   "promos": {
-    "1.21.1-latest": "1.21.1-v2.1.2",
-    "1.21.1-recommended": "1.21.1-v2.1.2",
+    "1.21.1-latest": "1.21.1-v3.0.1",
+    "1.21.1-recommended": "1.21.1-v3.0.1",
     "1.21.5-latest": "1.21.5-v2.0.0",
     "1.21.5-recommended": "1.21.5-v2.0.0",
     "1.21.6-latest": "1.21.5-v2.0.0",

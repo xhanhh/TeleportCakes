@@ -33,7 +33,7 @@ public class CakeTeleporter {
         }
 
         BlockPos spawnPos = NetherTeleportHelper.getOrCreateNetherSpawn(nether, player, player.getDirection());
-        Vec3 targetPos = spawnPos.getCenter();
+        Vec3 targetPos = getCenter(spawnPos);
 
         return player.teleport(new TeleportTransition(
                 nether,
@@ -58,7 +58,7 @@ public class CakeTeleporter {
 
         Entity teleportedPlayer = player.teleport(new TeleportTransition(
                 endLevel,
-                spawnPos.getCenter(),
+                getCenter(spawnPos),
                 player.getKnownMovement(),
                 Direction.WEST.toYRot(),
                 player.getXRot(),
@@ -85,6 +85,10 @@ public class CakeTeleporter {
             level.setBlock(cakePos, BlocksRegistry.overworld_cake.get().defaultBlockState(), 3);
         }
 
+    }
+
+    private Vec3 getCenter(BlockPos pos) {
+        return Vec3.atCenterOf(pos);
     }
 
 }

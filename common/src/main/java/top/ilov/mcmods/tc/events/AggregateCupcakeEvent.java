@@ -15,14 +15,21 @@ import top.ilov.mcmods.tc.network.AggregateCupcakePayload;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class AggregateCupcakeEvent {
 
-    public static boolean handleScroll(double scrollDeltaY) {
+    public static boolean handleScroll(double scrollDeltaX, double scrollDeltaY) {
 
-        if (scrollDeltaY == 0.0D) {
+        // 在macOS上shift+鼠标滚动是横向不是竖向。太坑了。
+        double scrollDelta =
+                scrollDeltaY != 0.0D ? scrollDeltaY : -scrollDeltaX;
+        if (scrollDelta == 0.0D) {
             return false;
         }
 
         Minecraft minecraft = Minecraft.getInstance();
-        if (minecraft.screen != null || !minecraft.hasShiftDown()) {
+        if (minecraft.gui.screen() != null) {
+            return false;
+        }
+
+        if (!minecraft.hasShiftDown() && !minecraft.options.keyShift.isDown()) {
             return false;
         }
 
@@ -41,7 +48,7 @@ public final class AggregateCupcakeEvent {
         }
 
         ItemStack stack = player.getItemInHand(hand);
-        int delta = scrollDeltaY > 0.0D ? 1 : -1;
+        int delta = scrollDelta > 0.0D ? 1 : -1;
         int nextIndex = AggregateCupcakeDestination.fromIndex(
                 AggregateCupcakeItem.getSelectedDestinationIndex(stack) + delta
         ).ordinal();

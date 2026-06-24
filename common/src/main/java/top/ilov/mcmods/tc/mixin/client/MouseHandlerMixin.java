@@ -11,8 +11,8 @@ import top.ilov.mcmods.tc.events.AggregateCupcakeEvent;
 public class MouseHandlerMixin {
 
     @Inject(method = "onScroll", at = @At("HEAD"), cancellable = true)
-    private void teleportcakes$handleAggregateCupcakeScroll(long windowPointer, double horizontal, double vertical, CallbackInfo ci) {
-        if (AggregateCupcakeEvent.handleScroll(vertical)) {
+    private void teleportcakes$handleAggregateCupcakeScroll(long handle, double xoffset, double yoffset, CallbackInfo ci) {
+        if (AggregateCupcakeEvent.handleScroll(xoffset, yoffset)) {
             ci.cancel();
         }
     }

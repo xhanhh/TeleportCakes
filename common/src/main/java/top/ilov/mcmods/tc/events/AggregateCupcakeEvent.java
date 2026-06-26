@@ -15,9 +15,11 @@ import top.ilov.mcmods.tc.network.AggregateCupcakePayload;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class AggregateCupcakeEvent {
 
-    public static boolean handleScroll(double scrollDeltaY) {
+    public static boolean handleScroll(double scrollDeltaX,double scrollDeltaY) {
 
-        if (scrollDeltaY == 0.0D) {
+        double scrollDelta =
+                scrollDeltaY != 0.0D ? scrollDeltaY : -scrollDeltaX;
+        if (scrollDelta == 0.0D) {
             return false;
         }
 
@@ -41,7 +43,7 @@ public final class AggregateCupcakeEvent {
         }
 
         ItemStack stack = player.getItemInHand(hand);
-        int delta = scrollDeltaY > 0.0D ? 1 : -1;
+        int delta = scrollDelta > 0.0D ? 1 : -1;
         int nextIndex = AggregateCupcakeDestination.fromIndex(
                 AggregateCupcakeItem.getSelectedDestinationIndex(stack) + delta
         ).ordinal();

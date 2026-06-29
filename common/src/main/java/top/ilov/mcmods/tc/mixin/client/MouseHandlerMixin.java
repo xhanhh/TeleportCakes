@@ -12,7 +12,7 @@ public class MouseHandlerMixin {
 
     @Inject(method = "onScroll", at = @At("HEAD"), cancellable = true)
     private void teleportcakes$handleAggregateCupcakeScroll(long windowPointer, double horizontal, double vertical, CallbackInfo ci) {
-        if (AggregateCupcakeEvent.handleScroll(vertical)) {
+        if (AggregateCupcakeEvent.handleScroll(windowPointer, horizontal, vertical)) {
             ci.cancel();
         }
     }

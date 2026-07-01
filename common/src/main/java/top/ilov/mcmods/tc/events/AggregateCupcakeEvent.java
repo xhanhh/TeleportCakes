@@ -3,10 +3,12 @@ package top.ilov.mcmods.tc.events;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.ScrollWheelHandler;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.protocol.common.ServerboundCustomPayloadPacket;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
+import org.joml.Vector2i;
 import org.jspecify.annotations.Nullable;
 import top.ilov.mcmods.tc.items.AggregateCupcakeDestination;
 import top.ilov.mcmods.tc.items.cupcakes.AggregateCupcakeItem;
@@ -15,14 +17,23 @@ import top.ilov.mcmods.tc.network.AggregateCupcakePayload;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class AggregateCupcakeEvent {
 
-    public static boolean handleScroll(double scrollDeltaY) {
+    private static final ScrollWheelHandler SCROLL_WHEEL_HANDLER = new ScrollWheelHandler();
 
-        if (scrollDeltaY == 0.0D) {
+    public static boolean handleScroll(long handle, double scrollDeltaX, double scrollDeltaY) {
+
+        if (scrollDeltaX == 0.0D && scrollDeltaY == 0.0D) {
             return false;
         }
 
         Minecraft minecraft = Minecraft.getInstance();
-        if (minecraft.screen != null || !minecraft.hasShiftDown()) {
+        if (handle != minecraft.getWindow().handle()
+                || minecraft.getOverlay() != null
+                || minecraft.screen != null
+        ) {
+            return false;
+        }
+
+        if (!minecraft.hasShiftDown() && !minecraft.options.keyShift.isDown()) {
             return false;
         }
 
@@ -40,8 +51,19 @@ public final class AggregateCupcakeEvent {
             return true;
         }
 
+        Vector2i scroll = SCROLL_WHEEL_HANDLER.onMouseScroll(
+                normalizeScrollDelta(minecraft, scrollDeltaX),
+                normalizeScrollDelta(minecraft, scrollDeltaY)
+        );
+        if (scroll.x == 0 && scroll.y == 0) {
+            return true;
+        }
+
+        int scrollDelta = scroll.y != 0 ? scroll.y : -scroll.x;
+        int delta = scrollDelta > 0 ? 1 : -1;
+
         ItemStack stack = player.getItemInHand(hand);
-        int delta = scrollDeltaY > 0.0D ? 1 : -1;
+
         int nextIndex = AggregateCupcakeDestination.fromIndex(
                 AggregateCupcakeItem.getSelectedDestinationIndex(stack) + delta
         ).ordinal();
@@ -56,6 +78,15 @@ public final class AggregateCupcakeEvent {
         }
 
         return true;
+
+    }
+
+    private static double normalizeScrollDelta(Minecraft minecraft, double scrollDelta) {
+
+        double adjustedDelta =
+                minecraft.options.discreteMouseScroll().get() ? Math.signum(scrollDelta) : scrollDelta;
+
+        return adjustedDelta * minecraft.options.mouseWheelSensitivity().get();
 
     }
 

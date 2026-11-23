@@ -1,0 +1,17 @@
+{
+	"required": true,
+	"minVersion": "0.8",
+	"package": "top.ilov.mcmods.tc.mixin",
+  	"refmap": "${mod_id}.refmap.json",
+	"compatibilityLevel": "JAVA_17",
+	"mixins": [
+		"TeleportCakesMixin",
+		"PlayerRespawnLogicInvoker"
+	],
+	"client": [
+		"client.MouseHandlerMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
